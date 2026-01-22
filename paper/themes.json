@@ -1,0 +1,14 @@
+[
+  { "file": "themes/brutalist-gazette.css", "name": "Brutalist Gazette" },
+  { "file": "themes/broadsheet.css", "name": "Broadsheet" },
+  { "file": "themes/beton-brut.css", "name": "Béton Brut" },
+  { "file": "themes/mod.css", "name": "Mod" },
+  { "file": "themes/ny-ed.css", "name": "New York Editorial" },
+  { "file": "themes/classic.css", "name": "Classic" },
+  { "file": "themes/typewriter.css", "name": "Typewriter" },
+  { "file": "themes/serif.css", "name": "Serif" },
+  { "file": "themes/compact.css", "name": "Compact" },
+  { "file": "themes/large.css", "name": "Large Print" },
+  { "file": "themes/rebel.css", "name": "Rebel" },
+  { "file": "themes/focus.css", "name": "Focus" }
+]

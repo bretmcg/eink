@@ -5,42 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paper - Theme Picker</title>
 
-    <!-- ========== CONFIGURATION ========== -->
-    <!-- Add new documents and themes here -->
-    <script>
-        const DOCUMENTS = [
-            { file: 'markdown-files/the-weight-of-light.md', name: 'The Weight of Light' },
-            { file: 'markdown-files/document.md', name: 'Sample Document' },
-            { file: 'markdown-files/notes.md', name: 'Notes' },
-            { file: 'markdown-files/essay.md', name: 'Essay' },
-            { file: 'markdown-files/profile.md', name: 'Profile' },
-            { file: 'markdown-files/still-canvas.md', name: 'Still canvas' },
-            { file: 'markdown-files/creating-still.md', name: 'Creating still' },
-            { file: 'markdown-files/zen-flat-spec.md', name: 'Zen .flat spec' },
-            { file: 'markdown-files/deal_with_boox-and-kickstarter-levels.md', name: 'Boox into Kickstarter' },
-            { file: 'markdown-files/marked2-readonly-vibes-on-boox.md', name: 'Marked 2 vibes on boox' },
-            { file: 'markdown-files/magic-party.md', name: 'Magic party' },
-            { file: 'markdown-files/kyber.md', name: 'The Kyber Manifesto' },
-            //
-        ];
-
-        const THEMES = [
-            { file: 'themes/brutalist-gazette.css', name: 'Brutalist Gazette' },
-            { file: 'themes/broadsheet.css', name: 'Broadsheet' },
-            { file: 'themes/beton-brut.css', name: 'Béton Brut' },
-            { file: 'themes/mod.css', name: 'Mod' },
-            { file: 'themes/ny-ed.css', name: 'New York Editorial' },
-            { file: 'themes/classic.css', name: 'Classic' },
-            { file: 'themes/typewriter.css', name: 'Typewriter' },
-            { file: 'themes/serif.css', name: 'Serif' },
-            { file: 'themes/compact.css', name: 'Compact' },
-            { file: 'themes/large.css', name: 'Large Print' },
-            { file: 'themes/rebel.css', name: 'Rebel' },
-            { file: 'themes/focus.css', name: 'Focus' },
-            //
-        ];
-    </script>
-    <!-- ========== END CONFIGURATION ========== -->
+    <!-- Configuration loaded from JSON files -->
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
@@ -322,6 +287,10 @@
     </div>
 
     <script>
+        // Configuration data (loaded from JSON)
+        let DOCUMENTS = [];
+        let THEMES = [];
+
         // Picker elements
         const docDropdown = document.getElementById('doc-dropdown');
         const docTrigger = document.getElementById('doc-trigger');
@@ -347,8 +316,8 @@
         const themeCss = document.getElementById('theme-css');
 
         // Track selections
-        let selectedDoc = DOCUMENTS[0];
-        let selectedTheme = THEMES[0];
+        let selectedDoc = null;
+        let selectedTheme = null;
 
         // Helper to load a document
         async function loadDocument(file) {
@@ -365,8 +334,13 @@
             themeDropdown.classList.remove('active');
         }
 
-        // Populate document picker and reader panel
-        DOCUMENTS.forEach((doc, i) => {
+        // Initialize UI after loading config
+        function initializeUI() {
+            selectedDoc = DOCUMENTS[0];
+            selectedTheme = THEMES[0];
+
+            // Populate document picker and reader panel
+            DOCUMENTS.forEach((doc, i) => {
             // Picker dropdown option
             const pickerBtn = document.createElement('button');
             pickerBtn.className = 'dropdown-option' + (i === 0 ? ' selected' : '');
@@ -437,9 +411,10 @@
             themePanel.appendChild(readerBtn);
         });
 
-        // Set initial trigger text
-        docTrigger.textContent = selectedDoc.name;
-        themeTrigger.textContent = selectedTheme.name;
+            // Set initial trigger text
+            docTrigger.textContent = selectedDoc.name;
+            themeTrigger.textContent = selectedTheme.name;
+        }
 
         // Picker dropdown toggles
         docTrigger.addEventListener('click', () => {
@@ -535,6 +510,19 @@
             if (e.key === 'Escape' && reader.classList.contains('active')) {
                 closeBtn.click();
             }
+        });
+
+        // Load configuration and initialize
+        Promise.all([
+            fetch('documents.json').then(r => r.json()),
+            fetch('themes.json').then(r => r.json())
+        ]).then(([docs, themes]) => {
+            DOCUMENTS = docs;
+            THEMES = themes;
+            initializeUI();
+        }).catch(err => {
+            console.error('Failed to load configuration:', err);
+            alert('Failed to load configuration files');
         });
     </script>
 </body>

@@ -55,9 +55,9 @@ The `<article>` element isolates theme styles from the picker UI.
 
 ### Adding Content
 
-**Documents**: Add markdown files to `www/paper/markdown-files/`, then add to `DOCUMENTS` array in `index.html`
+**Documents**: Add markdown files to `paper/documents/`, then add to `documents.json`
 
-**Themes**: Create CSS file in `www/paper/themes/`, then add to `THEMES` array in `index.html`
+**Themes**: Create CSS file in `paper/themes/`, then add to `themes.json`
 
 ## E-Ink Constraints
 
