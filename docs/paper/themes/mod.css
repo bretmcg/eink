@@ -1,0 +1,93 @@
+/* Mod - Bold modernist typography, full width */
+
+#reader-content {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    max-width: 100%;
+    padding: 40px 60px;
+    line-height: 1.5;
+}
+
+#reader-content h1 {
+    font-size: 5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    line-height: 0.9;
+    margin-bottom: 1em;
+    border-bottom: 8px solid var(--fg);
+    padding-bottom: 0.3em;
+}
+
+#reader-content h2 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 2em;
+    border-bottom: 4px solid var(--fg);
+}
+
+#reader-content h3 {
+    font-size: 1.4rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+}
+
+#reader-content p {
+    font-size: 1.1rem;
+    max-width: 70ch;
+}
+
+#reader-content strong {
+    font-weight: 900;
+}
+
+#reader-content blockquote {
+    font-size: 2rem;
+    font-weight: 700;
+    font-style: normal;
+    border-left: 8px solid var(--fg);
+    padding-left: 30px;
+    margin: 2em 0;
+    max-width: 50ch;
+}
+
+#reader-content blockquote p {
+    font-size: inherit;
+}
+
+#reader-content ul,
+#reader-content ol {
+    font-size: 1.1rem;
+}
+
+#reader-content li {
+    margin: 0.8em 0;
+}
+
+#reader-content hr {
+    border-top: 8px solid var(--fg);
+    margin: 3em 0;
+}
+
+#reader-content code {
+    font-family: "SF Mono", Monaco, "Courier New", monospace;
+    font-weight: 700;
+}
+
+#reader-content pre {
+    border: 4px solid var(--fg);
+    padding: 2em;
+}
+
+#reader-content table {
+    border: 4px solid var(--fg);
+}
+
+#reader-content th {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}

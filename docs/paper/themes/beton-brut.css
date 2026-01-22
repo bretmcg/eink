@@ -1,0 +1,91 @@
+/* BÉTON BRUT: Brutalist/Bauhaus E-Ink Theme */
+
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;900&family=JetBrains+Mono&display=swap');
+
+:root {
+    --ink: #000000;
+    --paper: #FFFFFF;
+    --border-width: 4px; /* Heavy, industrial lines */
+}
+
+body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.4;
+    padding: 0;
+    margin: 0;
+}
+
+/* THE MONOLITHIC HEADER
+   Uses "vw" units so the text is literally as wide as the screen. 
+*/
+h1 {
+    font-family: 'Anton', sans-serif;
+    font-size: 22vw; 
+    text-transform: uppercase;
+    line-height: 0.8;
+    margin: 0;
+    padding: 20px;
+    background-color: var(--ink);
+    color: var(--paper);
+    word-wrap: break-word;
+}
+
+/* SECTION HEADERS 
+   Bauhaus-style geometric alignment.
+*/
+h2 {
+    font-weight: 900;
+    font-size: 3rem;
+    border-top: var(--border-width) solid var(--ink);
+    border-bottom: var(--border-width) solid var(--ink);
+    padding: 10px 20px;
+    margin: 60px 0 20px 0;
+}
+
+/* THE GRID CONTENT
+   Brutalism loves exposed "infrastructure."
+*/
+p, ul, ol {
+    margin: 0;
+    padding: 40px 20px;
+    font-size: 1.2rem;
+    max-width: none;
+    border-bottom: 1px solid var(--ink); /* Exposed horizontal grid */
+}
+
+/* CODE / DATA
+   Treating code like an architectural label.
+*/
+code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 2px 8px;
+    font-weight: bold;
+}
+
+/* THE "BAUHAUS ACCENT"
+   Use this for specific callouts or blockquotes.
+*/
+blockquote {
+    margin: 0;
+    padding: 60px 20px;
+    background-color: #eeeeee; /* Light gray for texture */
+    font-weight: 900;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    border-right: 20px solid var(--ink); /* Heavy vertical bar */
+}
+
+/* FOOTER / META
+   Tiny text, high-density info.
+*/
+footer {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    padding: 20px;
+    text-transform: uppercase;
+}
+
