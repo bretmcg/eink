@@ -149,7 +149,7 @@ For textures that work on e-ink, use dot patterns instead of gray:
 
 ## Testing Themes
 
-1. Open `docs/paper/index.html` in a browser
+1. Open `www/paper/index.html` in a browser
 2. Select a document from the dropdown
 3. Select your theme from the theme dropdown
 4. Click "Open" to view in fullscreen reader

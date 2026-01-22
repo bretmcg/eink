@@ -6,18 +6,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 E-ink is a static web application for rendering and styling markdown documents optimized for e-ink displays. No build tools, package managers, or backend—pure HTML/CSS/JavaScript.
 
-**Main app**: `docs/paper/index.html` - Theme picker + fullscreen markdown reader
+**Main app**: `www/paper/index.html` - Theme picker + fullscreen markdown reader
 
 ## Development
 
 No build or install steps. Open HTML files directly in browser or serve with any static server:
 ```bash
-python3 -m http.server 8000 --directory docs
+python3 -m http.server 8000 --directory www
 ```
 
 ## Architecture
 
-### CSS Theme System (docs/paper/themes/)
+### CSS Theme System (www/paper/themes/)
 
 Layered CSS architecture using `@scope (article)` for style isolation:
 
@@ -55,9 +55,9 @@ The `<article>` element isolates theme styles from the picker UI.
 
 ### Adding Content
 
-**Documents**: Add markdown files to `docs/paper/markdown-files/`, then add to `DOCUMENTS` array in `index.html`
+**Documents**: Add markdown files to `www/paper/markdown-files/`, then add to `DOCUMENTS` array in `index.html`
 
-**Themes**: Create CSS file in `docs/paper/themes/`, then add to `THEMES` array in `index.html`
+**Themes**: Create CSS file in `www/paper/themes/`, then add to `THEMES` array in `index.html`
 
 ## E-Ink Constraints
 
@@ -70,6 +70,6 @@ The `<article>` element isolates theme styles from the picker UI.
 
 ## Other Entry Points
 
-- `docs/index.html` - Hub linking to all experiments
-- `docs/read1/` - Alternative "Zen Reader" implementation
-- `docs/labs/` - E-ink hardware tests (animation, latency, drawing, etc.)
+- `www/index.html` - Hub linking to all experiments
+- `www/read1/` - Alternative "Zen Reader" implementation
+- `www/labs/` - E-ink hardware tests (animation, latency, drawing, etc.)

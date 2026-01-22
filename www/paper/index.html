@@ -36,6 +36,7 @@
             { file: 'themes/compact.css', name: 'Compact' },
             { file: 'themes/large.css', name: 'Large Print' },
             { file: 'themes/rebel.css', name: 'Rebel' },
+            { file: 'themes/focus.css', name: 'Focus' },
             //
         ];
     </script>
@@ -201,15 +202,27 @@
         .reader-btn:active {
             opacity: 1;
         }
-        #close-btn {
+        #minimize-btn {
+            left: 10px;
+        }
+        #options-btn {
             right: 10px;
+        }
+        #close-btn {
+            right: 50px;
             font-size: 24px;
         }
         #theme-btn {
-            right: 50px;
+            right: 90px;
         }
         #doc-btn {
-            right: 90px;
+            right: 130px;
+        }
+        /* Hide D T X when collapsed */
+        .reader-controls.collapsed #doc-btn,
+        .reader-controls.collapsed #theme-btn,
+        .reader-controls.collapsed #close-btn {
+            display: none;
         }
         #theme-panel {
             display: none;
@@ -288,9 +301,13 @@
     </div>
 
     <div id="reader">
-        <button id="doc-btn" class="reader-btn">D</button>
-        <button id="theme-btn" class="reader-btn">T</button>
-        <button id="close-btn" class="reader-btn">&times;</button>
+        <div id="reader-controls" class="reader-controls collapsed">
+            <button id="minimize-btn" class="reader-btn">-</button>
+            <button id="doc-btn" class="reader-btn">D</button>
+            <button id="theme-btn" class="reader-btn">T</button>
+            <button id="close-btn" class="reader-btn">&times;</button>
+            <button id="options-btn" class="reader-btn">|</button>
+        </div>
         <div id="doc-panel"></div>
         <div id="theme-panel"></div>
         <!-- Base theme system (loaded first) -->
@@ -314,6 +331,9 @@
         const openBtn = document.getElementById('open-btn');
 
         // Reader elements
+        const readerControls = document.getElementById('reader-controls');
+        const minimizeBtn = document.getElementById('minimize-btn');
+        const optionsBtn = document.getElementById('options-btn');
         const closeBtn = document.getElementById('close-btn');
         const docBtn = document.getElementById('doc-btn');
         const docPanel = document.getElementById('doc-panel');
@@ -435,6 +455,25 @@
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.dropdown')) {
                 closePickerDropdowns();
+            }
+        });
+
+        // Options button toggles D T X visibility
+        optionsBtn.addEventListener('click', () => {
+            readerControls.classList.toggle('collapsed');
+            // Close panels when collapsing
+            if (readerControls.classList.contains('collapsed')) {
+                docPanel.classList.remove('active');
+                themePanel.classList.remove('active');
+            }
+        });
+
+        // Minimize button exits fullscreen
+        minimizeBtn.addEventListener('click', () => {
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            } else if (document.webkitFullscreenElement) {
+                document.webkitExitFullscreen();
             }
         });
 
