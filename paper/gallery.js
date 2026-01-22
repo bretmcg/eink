@@ -269,13 +269,62 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+// Normalize documents.json format to include date fields
+function normalizeJsonDocuments(docs) {
+    return docs.map(doc => ({
+        file: doc.file,
+        name: doc.name,
+        creationDate: null,
+        editDate: null
+    }));
+}
+
+// Normalize feed.rss.md.json format to standard document format
+function normalizeFeedDocuments(feed) {
+    const docs = [];
+    for (const publication of feed) {
+        if (!publication.posts || publication.posts.length === 0) continue;
+        for (const post of publication.posts) {
+            docs.push({
+                file: post['output.md'],
+                name: post.title,
+                creationDate: post.date || null,
+                editDate: null,
+                publication: publication.publication,
+                url: post['input.http']
+            });
+        }
+    }
+    return docs;
+}
+
+// Parse plain text file list (one filename per line) to standard document format
+// Files are relative to documents/ directory
+function parseTextFileList(text) {
+    return text
+        .split('\n')
+        .map(line => line.trim())
+        .filter(line => line && !line.startsWith('#'))
+        .map(filename => ({
+            file: 'documents/' + filename,
+            name: filename.replace(/\.[^.]+$/, ''),
+            creationDate: null,
+            editDate: null
+        }));
+}
+
 // Load configuration and initialize
 Promise.all([
-    fetch('documents.json').then(r => r.json()),
+    fetch('documents.json').then(r => r.json()).catch(() => []),
+    fetch('feed.rss.md.json').then(r => r.json()).catch(() => []),
+    fetch('documents/00-documents.txt').then(r => r.text()).catch(() => ''),
     fetch('themes.json').then(r => r.json()),
     CardDesign.init('rascal-of-diamonds')
-]).then(([docs, themes]) => {
-    DOCUMENTS = docs;
+]).then(([docs, feed, textList, themes]) => {
+    const jsonDocs = normalizeJsonDocuments(docs);
+    const feedDocs = normalizeFeedDocuments(feed);
+    const textDocs = parseTextFileList(textList);
+    DOCUMENTS = [...jsonDocs, ...feedDocs, ...textDocs];
     THEMES = themes;
     initializeReaderPanels();
     createGallery();

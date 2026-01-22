@@ -163,6 +163,11 @@ const CardDesign = {
                 background-repeat: no-repeat;
                 pointer-events: none;
                 z-index: 10;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+            .tile-card .frame-overlay.visible {
+                opacity: 1;
             }
             ` : ''}
         `;
