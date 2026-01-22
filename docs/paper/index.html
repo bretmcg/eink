@@ -113,7 +113,15 @@
 
     <div class="picker">
         <h1>Paper</h1>
-        <label for="theme-select">Select Theme:</label>
+
+        <label for="doc-select">Document:</label>
+        <select id="doc-select">
+            <option value="markdown-files/document.md">Sample Document</option>
+            <option value="markdown-files/notes.md">Notes</option>
+            <option value="markdown-files/essay.md">Essay</option>
+        </select>
+
+        <label for="theme-select">Theme:</label>
         <select id="theme-select">
             <option value="themes/classic.css">Classic</option>
             <option value="themes/typewriter.css">Typewriter</option>
@@ -121,6 +129,7 @@
             <option value="themes/compact.css">Compact</option>
             <option value="themes/large.css">Large Print</option>
         </select>
+
         <button id="open-btn">Open</button>
     </div>
 
@@ -132,6 +141,7 @@
     </div>
 
     <script>
+        const docSelect = document.getElementById('doc-select');
         const themeSelect = document.getElementById('theme-select');
         const openBtn = document.getElementById('open-btn');
         const closeBtn = document.getElementById('close-btn');
@@ -142,8 +152,9 @@
 
         openBtn.addEventListener('click', async () => {
             try {
-                // Load markdown
-                const response = await fetch('document.md');
+                // Load selected markdown
+                const response = await fetch(docSelect.value);
+                if (!response.ok) throw new Error('Document not found');
                 const markdown = await response.text();
 
                 // Render markdown
