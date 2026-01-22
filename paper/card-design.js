@@ -11,16 +11,31 @@ const CardDesign = {
     // All available designs
     designs: null,
 
+    // Loaded overlay data for current design
+    overlay: null,
+
     // Load designs from JSON and initialize
     async init(designName = 'default') {
         const response = await fetch('card-designs.json');
         this.designs = await response.json();
-        this.applyDesign(designName);
+        await this.applyDesign(designName);
     },
 
     // Apply a design by name
-    applyDesign(designName) {
+    async applyDesign(designName) {
         this.config = this.designs[designName] || this.designs['default'];
+        this.overlay = null;
+
+        // Load overlay file if specified
+        if (this.config.overlay) {
+            try {
+                const overlayResponse = await fetch(this.config.overlay);
+                this.overlay = await overlayResponse.json();
+            } catch (e) {
+                console.warn(`Failed to load overlay: ${this.config.overlay}`, e);
+            }
+        }
+
         this.injectStyles();
     },
 
@@ -43,7 +58,9 @@ const CardDesign = {
         const hasShadow = c.outerShadowWidth !== '0';
         const hasCornerPip = c.cornerPip;
         const hasBorderColors = c.borderColors;
-        const hasBackgroundImage = c.backgroundImage;
+        // Use overlay image if available, fall back to backgroundImage for backward compat
+        const overlayImage = this.overlay?.image || c.backgroundImage;
+        const hasBackgroundImage = !!overlayImage;
 
         return `
             .tile-card {
@@ -157,7 +174,7 @@ const CardDesign = {
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background-image: url('${c.backgroundImage}');
+                background-image: url('${overlayImage}');
                 background-size: 100% 100%;
                 background-position: center;
                 background-repeat: no-repeat;
@@ -178,15 +195,18 @@ const CardDesign = {
         const card = document.createElement('div');
         card.className = 'tile-card';
 
-        // Add frame overlay if design has backgroundImage
-        if (this.config.backgroundImage) {
+        // Use overlay image if available, fall back to backgroundImage for backward compat
+        const hasOverlayImage = this.overlay?.image || this.config.backgroundImage;
+
+        // Add frame overlay if design has overlay image
+        if (hasOverlayImage) {
             const overlay = document.createElement('div');
             overlay.className = 'frame-overlay';
             card.appendChild(overlay);
         }
 
-        // Add corner pips if design has them (and no background image)
-        if (this.config.cornerPip && !this.config.backgroundImage) {
+        // Add corner pips if design has them (and no overlay image)
+        if (this.config.cornerPip && !hasOverlayImage) {
             const pip = this.config.cornerPip;
 
             // Top-left pip

@@ -15,7 +15,7 @@
       "bottom": "#fff",
       "left": "#fff"
     },
-    "backgroundImage": "assets/raccoon-of-diamonds.png",
+    "overlay": "overlays/rascal-of-diamonds.json",
     "cornerPip": {
       "symbol": "♦",
       "letter": "J",
