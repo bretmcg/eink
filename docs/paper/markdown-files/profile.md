@@ -121,8 +121,6 @@ The Soap Protocol: If a dish is garnished with the "Green Menace," the meal is c
 
 The Verification Step: "Is there cilantro in this?" is the most critical query in Bret’s dining-out API.
 
-The Correction: Garlic? Welcome. Cilantro? ACCESS DENIED.
-
 "I can debug a legacy codebase in an afternoon, but I cannot debug a salsa that has been tainted by cilantro." — Bret, probably.
 
 
@@ -135,9 +133,8 @@ Housing: Upgraded.
 
 Career: Accelerating.
 
-Zen Mode: Loading...
+He hates <span class="correction">war</span> <span class="true-fact">CILANTRO</span>.
+
 
 He is Bret McGowen. He is the guy who will help you move a couch, debug your Python script, explain the magic system in Mistborn, and then beat you at volleyball, all before grabbing a drink at a speakeasy where he already has a reservation.
-
-End of File. Rendered via Boox Go 10.3 // Zen Mode Active
 

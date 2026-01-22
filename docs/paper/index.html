@@ -132,6 +132,29 @@
             background: var(--fg);
             color: var(--bg);
         }
+        #doc-btn {
+            position: fixed;
+            top: 10px;
+            right: 110px;
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--fg);
+            background: var(--bg);
+            color: var(--fg);
+            font-size: 18px;
+            font-weight: 900;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            padding: 0;
+            line-height: 1;
+        }
+        #doc-btn:active {
+            background: var(--fg);
+            color: var(--bg);
+        }
         #theme-btn {
             position: fixed;
             top: 10px;
@@ -166,9 +189,22 @@
             max-height: 80vh;
             overflow-y: auto;
         }
-        #theme-panel.active {
+        #theme-panel.active,
+        #doc-panel.active {
             display: block;
         }
+        #doc-panel {
+            display: none;
+            position: fixed;
+            top: 60px;
+            right: 10px;
+            border: 4px solid var(--fg);
+            background: var(--bg);
+            z-index: 10000;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .doc-option,
         .theme-option {
             display: block;
             width: 100%;
@@ -184,9 +220,12 @@
             text-align: left;
             white-space: nowrap;
         }
+        .doc-option:last-child,
         .theme-option:last-child {
             border-bottom: none;
         }
+        .doc-option:active,
+        .doc-option.current,
         .theme-option:active,
         .theme-option.current {
             background: var(--fg);
@@ -210,8 +249,10 @@
     </div>
 
     <div id="reader">
+        <button id="doc-btn">D</button>
         <button id="theme-btn">T</button>
         <button id="close-btn">&times;</button>
+        <div id="doc-panel"></div>
         <div id="theme-panel"></div>
         <link id="base-css" rel="stylesheet" href="">
         <link id="theme-css" rel="stylesheet" href="">
@@ -223,6 +264,8 @@
         const themeSelect = document.getElementById('theme-select');
         const openBtn = document.getElementById('open-btn');
         const closeBtn = document.getElementById('close-btn');
+        const docBtn = document.getElementById('doc-btn');
+        const docPanel = document.getElementById('doc-panel');
         const themeBtn = document.getElementById('theme-btn');
         const themePanel = document.getElementById('theme-panel');
         const reader = document.getElementById('reader');
@@ -230,12 +273,40 @@
         const baseCss = document.getElementById('base-css');
         const themeCss = document.getElementById('theme-css');
 
-        // Populate document select from config
+        // Helper to load a document
+        async function loadDocument(file) {
+            const response = await fetch(file);
+            if (!response.ok) throw new Error('Document not found');
+            const markdown = await response.text();
+            readerContent.innerHTML = marked.parse(markdown);
+            reader.scrollTop = 0;
+        }
+
+        // Populate document select and panel from config
         DOCUMENTS.forEach(doc => {
+            // Add to select
             const opt = document.createElement('option');
             opt.value = doc.file;
             opt.textContent = doc.name;
             docSelect.appendChild(opt);
+
+            // Add to panel
+            const btn = document.createElement('button');
+            btn.className = 'doc-option';
+            btn.textContent = doc.name;
+            btn.dataset.doc = doc.file;
+            btn.addEventListener('click', async () => {
+                try {
+                    await loadDocument(doc.file);
+                    docSelect.value = doc.file;
+                    docPanel.classList.remove('active');
+                    docPanel.querySelectorAll('.doc-option').forEach(b => b.classList.remove('current'));
+                    btn.classList.add('current');
+                } catch (err) {
+                    alert('Error loading document: ' + err.message);
+                }
+            });
+            docPanel.appendChild(btn);
         });
 
         // Populate theme select and panel from config
@@ -261,21 +332,27 @@
             themePanel.appendChild(btn);
         });
 
+        docBtn.addEventListener('click', () => {
+            docPanel.classList.toggle('active');
+            themePanel.classList.remove('active');
+        });
+
         themeBtn.addEventListener('click', () => {
             themePanel.classList.toggle('active');
+            docPanel.classList.remove('active');
         });
 
         openBtn.addEventListener('click', async () => {
             try {
-                const response = await fetch(docSelect.value);
-                if (!response.ok) throw new Error('Document not found');
-                const markdown = await response.text();
-
-                readerContent.innerHTML = marked.parse(markdown);
+                await loadDocument(docSelect.value);
 
                 baseCss.href = 'eink.css';
                 themeCss.href = themeSelect.value;
 
+                // Mark current selections in panels
+                docPanel.querySelectorAll('.doc-option').forEach(btn => {
+                    btn.classList.toggle('current', btn.dataset.doc === docSelect.value);
+                });
                 themePanel.querySelectorAll('.theme-option').forEach(btn => {
                     btn.classList.toggle('current', btn.dataset.theme === themeSelect.value);
                 });
@@ -295,6 +372,7 @@
 
         closeBtn.addEventListener('click', () => {
             reader.classList.remove('active');
+            docPanel.classList.remove('active');
             themePanel.classList.remove('active');
             document.body.style.overflow = '';
 
