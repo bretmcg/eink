@@ -71,16 +71,64 @@
             font-weight: 900;
             margin-bottom: 10px;
         }
-        select {
+        /* Custom dropdown */
+        .dropdown {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .dropdown-trigger {
             width: 100%;
-            padding: 15px;
-            font-size: 1.2rem;
+            padding: 15px 20px;
+            font-size: 1rem;
+            font-weight: 900;
             font-family: monospace;
             border: 4px solid var(--fg);
             background: var(--bg);
             color: var(--fg);
-            margin-bottom: 20px;
             cursor: pointer;
+            text-align: left;
+        }
+        .dropdown-trigger:active {
+            background: var(--fg);
+            color: var(--bg);
+        }
+        .dropdown-panel {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            border: 4px solid var(--fg);
+            border-top: none;
+            background: var(--bg);
+            z-index: 100;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .dropdown.active .dropdown-panel {
+            display: block;
+        }
+        .dropdown-option {
+            display: block;
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: 900;
+            font-family: monospace;
+            border: none;
+            border-bottom: 2px solid var(--fg);
+            background: var(--bg);
+            color: var(--fg);
+            cursor: pointer;
+            text-align: left;
+        }
+        .dropdown-option:last-child {
+            border-bottom: none;
+        }
+        .dropdown-option:active,
+        .dropdown-option.selected {
+            background: var(--fg);
+            color: var(--bg);
         }
         button {
             width: 100%;
@@ -126,40 +174,18 @@
             padding: 40px;
             margin: 0 auto;
         }
-        #close-btn {
+        /* Floating reader buttons - borderless mod style */
+        .reader-btn {
             position: fixed;
             top: 10px;
-            right: 10px;
             width: 40px;
             height: 40px;
-            border: 2px solid var(--fg);
-            background: var(--bg);
-            color: var(--fg);
-            font-size: 24px;
-            font-weight: 900;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            padding: 0;
-            line-height: 1;
-        }
-        #close-btn:active {
-            background: var(--fg);
-            color: var(--bg);
-        }
-        #doc-btn {
-            position: fixed;
-            top: 10px;
-            right: 110px;
-            width: 40px;
-            height: 40px;
-            border: 2px solid var(--fg);
-            background: var(--bg);
+            border: none;
+            background: transparent;
             color: var(--fg);
             font-size: 18px;
             font-weight: 900;
+            font-family: monospace;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -167,33 +193,23 @@
             z-index: 10000;
             padding: 0;
             line-height: 1;
+            opacity: 0.6;
         }
-        #doc-btn:active {
-            background: var(--fg);
-            color: var(--bg);
+        .reader-btn:hover {
+            opacity: 1;
+        }
+        .reader-btn:active {
+            opacity: 1;
+        }
+        #close-btn {
+            right: 10px;
+            font-size: 24px;
         }
         #theme-btn {
-            position: fixed;
-            top: 10px;
-            right: 60px;
-            width: 40px;
-            height: 40px;
-            border: 2px solid var(--fg);
-            background: var(--bg);
-            color: var(--fg);
-            font-size: 18px;
-            font-weight: 900;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            padding: 0;
-            line-height: 1;
+            right: 50px;
         }
-        #theme-btn:active {
-            background: var(--fg);
-            color: var(--bg);
+        #doc-btn {
+            right: 90px;
         }
         #theme-panel {
             display: none;
@@ -256,19 +272,25 @@
     <div class="picker">
         <h1>Paper</h1>
 
-        <label for="doc-select">Document:</label>
-        <select id="doc-select"></select>
+        <label>Document:</label>
+        <div class="dropdown" id="doc-dropdown">
+            <button class="dropdown-trigger" id="doc-trigger">Select document...</button>
+            <div class="dropdown-panel" id="doc-picker-panel"></div>
+        </div>
 
-        <label for="theme-select">Theme:</label>
-        <select id="theme-select"></select>
+        <label>Theme:</label>
+        <div class="dropdown" id="theme-dropdown">
+            <button class="dropdown-trigger" id="theme-trigger">Select theme...</button>
+            <div class="dropdown-panel" id="theme-picker-panel"></div>
+        </div>
 
         <button id="open-btn">Open</button>
     </div>
 
     <div id="reader">
-        <button id="doc-btn">D</button>
-        <button id="theme-btn">T</button>
-        <button id="close-btn">&times;</button>
+        <button id="doc-btn" class="reader-btn">D</button>
+        <button id="theme-btn" class="reader-btn">T</button>
+        <button id="close-btn" class="reader-btn">&times;</button>
         <div id="doc-panel"></div>
         <div id="theme-panel"></div>
         <!-- Base theme system (loaded first) -->
@@ -282,9 +304,16 @@
     </div>
 
     <script>
-        const docSelect = document.getElementById('doc-select');
-        const themeSelect = document.getElementById('theme-select');
+        // Picker elements
+        const docDropdown = document.getElementById('doc-dropdown');
+        const docTrigger = document.getElementById('doc-trigger');
+        const docPickerPanel = document.getElementById('doc-picker-panel');
+        const themeDropdown = document.getElementById('theme-dropdown');
+        const themeTrigger = document.getElementById('theme-trigger');
+        const themePickerPanel = document.getElementById('theme-picker-panel');
         const openBtn = document.getElementById('open-btn');
+
+        // Reader elements
         const closeBtn = document.getElementById('close-btn');
         const docBtn = document.getElementById('doc-btn');
         const docPanel = document.getElementById('doc-panel');
@@ -296,6 +325,10 @@
         const baseStylesCss = document.getElementById('base-styles-css');
         const themeCss = document.getElementById('theme-css');
 
+        // Track selections
+        let selectedDoc = DOCUMENTS[0];
+        let selectedTheme = THEMES[0];
+
         // Helper to load a document
         async function loadDocument(file) {
             const response = await fetch(file);
@@ -305,56 +338,107 @@
             reader.scrollTop = 0;
         }
 
-        // Populate document select and panel from config
-        DOCUMENTS.forEach(doc => {
-            // Add to select
-            const opt = document.createElement('option');
-            opt.value = doc.file;
-            opt.textContent = doc.name;
-            docSelect.appendChild(opt);
+        // Close all picker dropdowns
+        function closePickerDropdowns() {
+            docDropdown.classList.remove('active');
+            themeDropdown.classList.remove('active');
+        }
 
-            // Add to panel
-            const btn = document.createElement('button');
-            btn.className = 'doc-option';
-            btn.textContent = doc.name;
-            btn.dataset.doc = doc.file;
-            btn.addEventListener('click', async () => {
+        // Populate document picker and reader panel
+        DOCUMENTS.forEach((doc, i) => {
+            // Picker dropdown option
+            const pickerBtn = document.createElement('button');
+            pickerBtn.className = 'dropdown-option' + (i === 0 ? ' selected' : '');
+            pickerBtn.textContent = doc.name;
+            pickerBtn.addEventListener('click', () => {
+                selectedDoc = doc;
+                docTrigger.textContent = doc.name;
+                docPickerPanel.querySelectorAll('.dropdown-option').forEach(b => b.classList.remove('selected'));
+                pickerBtn.classList.add('selected');
+                closePickerDropdowns();
+            });
+            docPickerPanel.appendChild(pickerBtn);
+
+            // Reader panel option
+            const readerBtn = document.createElement('button');
+            readerBtn.className = 'doc-option';
+            readerBtn.textContent = doc.name;
+            readerBtn.dataset.doc = doc.file;
+            readerBtn.addEventListener('click', async () => {
                 try {
                     await loadDocument(doc.file);
-                    docSelect.value = doc.file;
+                    selectedDoc = doc;
                     docPanel.classList.remove('active');
                     docPanel.querySelectorAll('.doc-option').forEach(b => b.classList.remove('current'));
-                    btn.classList.add('current');
+                    readerBtn.classList.add('current');
+                    // Sync picker
+                    docTrigger.textContent = doc.name;
+                    docPickerPanel.querySelectorAll('.dropdown-option').forEach(b => b.classList.remove('selected'));
+                    pickerBtn.classList.add('selected');
                 } catch (err) {
                     alert('Error loading document: ' + err.message);
                 }
             });
-            docPanel.appendChild(btn);
+            docPanel.appendChild(readerBtn);
         });
 
-        // Populate theme select and panel from config
-        THEMES.forEach(theme => {
-            // Add to select
-            const opt = document.createElement('option');
-            opt.value = theme.file;
-            opt.textContent = theme.name;
-            themeSelect.appendChild(opt);
+        // Populate theme picker and reader panel
+        THEMES.forEach((theme, i) => {
+            // Picker dropdown option
+            const pickerBtn = document.createElement('button');
+            pickerBtn.className = 'dropdown-option' + (i === 0 ? ' selected' : '');
+            pickerBtn.textContent = theme.name;
+            pickerBtn.addEventListener('click', () => {
+                selectedTheme = theme;
+                themeTrigger.textContent = theme.name;
+                themePickerPanel.querySelectorAll('.dropdown-option').forEach(b => b.classList.remove('selected'));
+                pickerBtn.classList.add('selected');
+                closePickerDropdowns();
+            });
+            themePickerPanel.appendChild(pickerBtn);
 
-            // Add to panel
-            const btn = document.createElement('button');
-            btn.className = 'theme-option';
-            btn.textContent = theme.name;
-            btn.dataset.theme = theme.file;
-            btn.addEventListener('click', () => {
+            // Reader panel option
+            const readerBtn = document.createElement('button');
+            readerBtn.className = 'theme-option';
+            readerBtn.textContent = theme.name;
+            readerBtn.dataset.theme = theme.file;
+            readerBtn.addEventListener('click', () => {
                 themeCss.href = theme.file;
-                themeSelect.value = theme.file;
+                selectedTheme = theme;
                 themePanel.classList.remove('active');
                 themePanel.querySelectorAll('.theme-option').forEach(b => b.classList.remove('current'));
-                btn.classList.add('current');
+                readerBtn.classList.add('current');
+                // Sync picker
+                themeTrigger.textContent = theme.name;
+                themePickerPanel.querySelectorAll('.dropdown-option').forEach(b => b.classList.remove('selected'));
+                pickerBtn.classList.add('selected');
             });
-            themePanel.appendChild(btn);
+            themePanel.appendChild(readerBtn);
         });
 
+        // Set initial trigger text
+        docTrigger.textContent = selectedDoc.name;
+        themeTrigger.textContent = selectedTheme.name;
+
+        // Picker dropdown toggles
+        docTrigger.addEventListener('click', () => {
+            themeDropdown.classList.remove('active');
+            docDropdown.classList.toggle('active');
+        });
+
+        themeTrigger.addEventListener('click', () => {
+            docDropdown.classList.remove('active');
+            themeDropdown.classList.toggle('active');
+        });
+
+        // Close picker dropdowns when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.dropdown')) {
+                closePickerDropdowns();
+            }
+        });
+
+        // Reader panel toggles
         docBtn.addEventListener('click', () => {
             docPanel.classList.toggle('active');
             themePanel.classList.remove('active');
@@ -367,18 +451,18 @@
 
         openBtn.addEventListener('click', async () => {
             try {
-                await loadDocument(docSelect.value);
+                await loadDocument(selectedDoc.file);
 
                 baseVarsCss.href = 'themes/_base.css';
                 baseStylesCss.href = 'themes/_styles.css';
-                themeCss.href = themeSelect.value;
+                themeCss.href = selectedTheme.file;
 
-                // Mark current selections in panels
+                // Mark current selections in reader panels
                 docPanel.querySelectorAll('.doc-option').forEach(btn => {
-                    btn.classList.toggle('current', btn.dataset.doc === docSelect.value);
+                    btn.classList.toggle('current', btn.dataset.doc === selectedDoc.file);
                 });
                 themePanel.querySelectorAll('.theme-option').forEach(btn => {
-                    btn.classList.toggle('current', btn.dataset.theme === themeSelect.value);
+                    btn.classList.toggle('current', btn.dataset.theme === selectedTheme.file);
                 });
 
                 reader.classList.add('active');
