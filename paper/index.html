@@ -299,14 +299,64 @@
             startThemeCycling();
         }
 
-        function startThemeCycling() {
-            const tiles = gallery.querySelectorAll('.tile');
+        // ===========================================
+        // ANIMATION CONFIG - tweak these values
+        // ===========================================
+        const animation = {
+            fadeDuration: 300,      // ms for fade out/in
+            cycleDuration: 10000,   // ms between theme changes per tile
+            staggerDelay: 800,      // ms between each tile starting
+        };
+
+        // ===========================================
+        // ANIMATION PATTERNS - swap these functions
+        // ===========================================
+
+        // Pattern: Staggered - each tile starts at a delay
+        function patternStaggered(tiles) {
             tiles.forEach((tile, i) => {
-                // Stagger the start so tiles don't all change at once
                 setTimeout(() => {
-                    setInterval(() => cycleTheme(tile), 10000);
-                }, i * 800);
+                    setInterval(() => cycleTheme(tile), animation.cycleDuration);
+                }, i * animation.staggerDelay);
             });
+        }
+
+        // Pattern: Wave - tiles cycle left to right, then repeat
+        function patternWave(tiles) {
+            let currentIndex = 0;
+            setInterval(() => {
+                cycleTheme(tiles[currentIndex]);
+                currentIndex = (currentIndex + 1) % tiles.length;
+            }, animation.staggerDelay);
+        }
+
+        // Pattern: Random - random tile cycles at random intervals (popcorn style)
+        function patternRandom(tiles) {
+            function pop() {
+                const randomTile = tiles[Math.floor(Math.random() * tiles.length)];
+                cycleTheme(randomTile);
+                // Random delay between 1-4 seconds for next pop
+                const nextDelay = 1000 + Math.random() * 3000;
+                setTimeout(pop, nextDelay);
+            }
+            pop();
+        }
+
+        // Pattern: All at once - every tile changes together
+        function patternSync(tiles) {
+            setInterval(() => {
+                tiles.forEach(tile => cycleTheme(tile));
+            }, animation.cycleDuration);
+        }
+
+        // ===========================================
+        // CORE ANIMATION - don't need to touch this
+        // ===========================================
+
+        function startThemeCycling() {
+            const tiles = Array.from(gallery.querySelectorAll('.tile'));
+            // Change this line to use a different pattern:
+            patternRandom(tiles);
         }
 
         function cycleTheme(tile) {
@@ -329,7 +379,7 @@
                 setTimeout(() => {
                     iframe.classList.remove('fading');
                 }, 50);
-            }, 300);
+            }, animation.fadeDuration);
         }
 
         function openReader(doc, theme) {
