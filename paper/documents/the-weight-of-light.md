@@ -4,7 +4,7 @@ There is a quality to afternoon light in late autumn that photographers call "go
 
 I think about light often, now that I spend my days staring at screens that generate their own. The irony is not lost on me. I write about presence while bathed in the pale blue glow of liquid crystals. I advocate for attention while my phone buzzes with notifications. This is the condition of our age: to know better and to do otherwise.
 
-## The Paradox of Illumination
+## The Paradox of Illumination.
 
 The screen you are reading this on—assuming you are reading this on a screen—is a small sun. It emits photons directly into your eyes at frequencies our ancestors only experienced by looking at the sky. We have brought daylight indoors, made it portable, held it in our hands. We check it first thing in the morning and last thing at night. We have become a species of sun-gazers.
 

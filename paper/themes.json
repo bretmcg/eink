@@ -10,5 +10,6 @@
   { "file": "themes/compact.css", "name": "Compact" },
   { "file": "themes/large.css", "name": "Large Print" },
   { "file": "themes/rebel.css", "name": "Rebel" },
-  { "file": "themes/focus.css", "name": "Focus" }
+  { "file": "themes/focus.css", "name": "Focus" },
+  { "file": "themes/paper-tablet.css", "name": "Paper tablet" }
 ]
