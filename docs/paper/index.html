@@ -4,6 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paper - Theme Picker</title>
+
+    <!-- ========== CONFIGURATION ========== -->
+    <!-- Add new documents and themes here -->
+    <script>
+        const DOCUMENTS = [
+            { file: 'markdown-files/the-weight-of-light.md', name: 'The Weight of Light' },
+            { file: 'markdown-files/document.md', name: 'Sample Document' },
+            { file: 'markdown-files/notes.md', name: 'Notes' },
+            { file: 'markdown-files/essay.md', name: 'Essay' },
+        ];
+
+        const THEMES = [
+            { file: 'themes/broadsheet.css', name: 'Broadsheet' },
+            { file: 'themes/beton-brut.css', name: 'Béton Brut' },
+            { file: 'themes/mod.css', name: 'Mod' },
+            { file: 'themes/ny-ed.css', name: 'New York Editorial' },
+            { file: 'themes/classic.css', name: 'Classic' },
+            { file: 'themes/typewriter.css', name: 'Typewriter' },
+            { file: 'themes/serif.css', name: 'Serif' },
+            { file: 'themes/compact.css', name: 'Compact' },
+            { file: 'themes/large.css', name: 'Large Print' },
+        ];
+    </script>
+    <!-- ========== END CONFIGURATION ========== -->
+
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         :root {
@@ -106,6 +131,66 @@
             background: var(--fg);
             color: var(--bg);
         }
+        #theme-btn {
+            position: fixed;
+            top: 10px;
+            right: 60px;
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--fg);
+            background: var(--bg);
+            color: var(--fg);
+            font-size: 18px;
+            font-weight: 900;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            padding: 0;
+            line-height: 1;
+        }
+        #theme-btn:active {
+            background: var(--fg);
+            color: var(--bg);
+        }
+        #theme-panel {
+            display: none;
+            position: fixed;
+            top: 60px;
+            right: 10px;
+            border: 4px solid var(--fg);
+            background: var(--bg);
+            z-index: 10000;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        #theme-panel.active {
+            display: block;
+        }
+        .theme-option {
+            display: block;
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1rem;
+            font-weight: 900;
+            font-family: monospace;
+            border: none;
+            border-bottom: 2px solid var(--fg);
+            background: var(--bg);
+            color: var(--fg);
+            cursor: pointer;
+            text-align: left;
+            white-space: nowrap;
+        }
+        .theme-option:last-child {
+            border-bottom: none;
+        }
+        .theme-option:active,
+        .theme-option.current {
+            background: var(--fg);
+            color: var(--bg);
+        }
     </style>
 </head>
 <body>
@@ -115,27 +200,18 @@
         <h1>Paper</h1>
 
         <label for="doc-select">Document:</label>
-        <select id="doc-select">
-            <option value="markdown-files/document.md">Sample Document</option>
-            <option value="markdown-files/notes.md">Notes</option>
-            <option value="markdown-files/essay.md">Essay</option>
-        </select>
+        <select id="doc-select"></select>
 
         <label for="theme-select">Theme:</label>
-        <select id="theme-select">
-            <option value="themes/ny-ed.css">New York Editorial</option>
-            <option value="themes/classic.css">Classic</option>
-            <option value="themes/typewriter.css">Typewriter</option>
-            <option value="themes/serif.css">Serif</option>
-            <option value="themes/compact.css">Compact</option>
-            <option value="themes/large.css">Large Print</option>
-        </select>
+        <select id="theme-select"></select>
 
         <button id="open-btn">Open</button>
     </div>
 
     <div id="reader">
+        <button id="theme-btn">T</button>
         <button id="close-btn">&times;</button>
+        <div id="theme-panel"></div>
         <link id="base-css" rel="stylesheet" href="">
         <link id="theme-css" rel="stylesheet" href="">
         <div id="reader-content"></div>
@@ -146,30 +222,66 @@
         const themeSelect = document.getElementById('theme-select');
         const openBtn = document.getElementById('open-btn');
         const closeBtn = document.getElementById('close-btn');
+        const themeBtn = document.getElementById('theme-btn');
+        const themePanel = document.getElementById('theme-panel');
         const reader = document.getElementById('reader');
         const readerContent = document.getElementById('reader-content');
         const baseCss = document.getElementById('base-css');
         const themeCss = document.getElementById('theme-css');
 
+        // Populate document select from config
+        DOCUMENTS.forEach(doc => {
+            const opt = document.createElement('option');
+            opt.value = doc.file;
+            opt.textContent = doc.name;
+            docSelect.appendChild(opt);
+        });
+
+        // Populate theme select and panel from config
+        THEMES.forEach(theme => {
+            // Add to select
+            const opt = document.createElement('option');
+            opt.value = theme.file;
+            opt.textContent = theme.name;
+            themeSelect.appendChild(opt);
+
+            // Add to panel
+            const btn = document.createElement('button');
+            btn.className = 'theme-option';
+            btn.textContent = theme.name;
+            btn.dataset.theme = theme.file;
+            btn.addEventListener('click', () => {
+                themeCss.href = theme.file;
+                themeSelect.value = theme.file;
+                themePanel.classList.remove('active');
+                themePanel.querySelectorAll('.theme-option').forEach(b => b.classList.remove('current'));
+                btn.classList.add('current');
+            });
+            themePanel.appendChild(btn);
+        });
+
+        themeBtn.addEventListener('click', () => {
+            themePanel.classList.toggle('active');
+        });
+
         openBtn.addEventListener('click', async () => {
             try {
-                // Load selected markdown
                 const response = await fetch(docSelect.value);
                 if (!response.ok) throw new Error('Document not found');
                 const markdown = await response.text();
 
-                // Render markdown
                 readerContent.innerHTML = marked.parse(markdown);
 
-                // Apply stylesheets
                 baseCss.href = 'eink.css';
                 themeCss.href = themeSelect.value;
 
-                // Go fullscreen
+                themePanel.querySelectorAll('.theme-option').forEach(btn => {
+                    btn.classList.toggle('current', btn.dataset.theme === themeSelect.value);
+                });
+
                 reader.classList.add('active');
                 document.body.style.overflow = 'hidden';
 
-                // Try native fullscreen API
                 if (reader.requestFullscreen) {
                     reader.requestFullscreen().catch(() => {});
                 } else if (reader.webkitRequestFullscreen) {
@@ -182,9 +294,9 @@
 
         closeBtn.addEventListener('click', () => {
             reader.classList.remove('active');
+            themePanel.classList.remove('active');
             document.body.style.overflow = '';
 
-            // Exit native fullscreen if active
             if (document.fullscreenElement) {
                 document.exitFullscreen();
             } else if (document.webkitFullscreenElement) {
@@ -192,7 +304,6 @@
             }
         });
 
-        // Also close on Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && reader.classList.contains('active')) {
                 closeBtn.click();

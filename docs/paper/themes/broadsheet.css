@@ -1,0 +1,179 @@
+/* Broadsheet - Elegant newspaper/journal typography */
+
+#reader-content {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    font-size: 19px;
+    max-width: 750px;
+    line-height: 1.7;
+    text-align: justify;
+    hyphens: auto;
+}
+
+/* Drop cap for first paragraph */
+#reader-content > p:first-of-type::first-letter {
+    float: left;
+    font-size: 4.5em;
+    line-height: 0.8;
+    padding-right: 0.1em;
+    padding-top: 0.05em;
+    font-weight: 700;
+}
+
+#reader-content h1 {
+    font-size: 3rem;
+    font-weight: 400;
+    font-style: italic;
+    text-align: center;
+    letter-spacing: 0.02em;
+    border-bottom: 1px solid var(--fg);
+    border-top: 4px solid var(--fg);
+    padding: 0.5em 0;
+    margin: 0 0 1em 0;
+}
+
+#reader-content h2 {
+    font-size: 1.6rem;
+    font-weight: 400;
+    font-style: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    text-align: center;
+    border-bottom: none;
+    margin-top: 2.5em;
+    margin-bottom: 1em;
+}
+
+#reader-content h2::before,
+#reader-content h2::after {
+    content: '—';
+    padding: 0 0.5em;
+}
+
+#reader-content h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-style: italic;
+    margin-top: 2em;
+}
+
+#reader-content p {
+    margin: 0;
+    text-indent: 1.5em;
+}
+
+#reader-content p:first-of-type,
+#reader-content h2 + p,
+#reader-content h3 + p,
+#reader-content blockquote + p,
+#reader-content pre + p,
+#reader-content ul + p,
+#reader-content ol + p {
+    text-indent: 0;
+}
+
+#reader-content blockquote {
+    font-size: 1.4rem;
+    font-style: italic;
+    font-weight: 400;
+    text-align: center;
+    text-indent: 0;
+    border-left: none;
+    border-top: 2px solid var(--fg);
+    border-bottom: 2px solid var(--fg);
+    padding: 1em 2em;
+    margin: 2em 0;
+    max-width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#reader-content blockquote p {
+    text-indent: 0;
+    text-align: center;
+}
+
+#reader-content hr {
+    border: none;
+    text-align: center;
+    margin: 2em 0;
+}
+
+#reader-content hr::before {
+    content: '* * *';
+    letter-spacing: 1em;
+}
+
+#reader-content ul,
+#reader-content ol {
+    margin: 1.5em 0;
+    padding-left: 1.5em;
+}
+
+#reader-content li {
+    margin: 0.3em 0;
+    text-align: left;
+}
+
+#reader-content code {
+    font-family: "SF Mono", Menlo, Monaco, monospace;
+    font-size: 0.85em;
+    background: transparent;
+    color: var(--fg);
+    border: 1px solid var(--fg);
+    padding: 0.1em 0.3em;
+}
+
+#reader-content pre {
+    background: transparent;
+    color: var(--fg);
+    border: 1px solid var(--fg);
+    border-left: 4px solid var(--fg);
+    padding: 1.5em;
+    font-size: 0.85em;
+    text-align: left;
+}
+
+#reader-content pre code {
+    border: none;
+    padding: 0;
+}
+
+#reader-content strong {
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+#reader-content em {
+    font-style: italic;
+}
+
+#reader-content a {
+    text-decoration: none;
+    border-bottom: 1px solid var(--fg);
+}
+
+#reader-content table {
+    font-size: 0.9em;
+    margin: 2em auto;
+    border: 1px solid var(--fg);
+}
+
+#reader-content th {
+    background: transparent;
+    color: var(--fg);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85em;
+    letter-spacing: 0.1em;
+    border: 1px solid var(--fg);
+}
+
+#reader-content td {
+    border: 1px solid var(--fg);
+}
+
+#reader-content img {
+    display: block;
+    margin: 2em auto;
+    border: 1px solid var(--fg);
+}
