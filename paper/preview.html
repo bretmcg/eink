@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview</title>
+    <!-- Base theme system -->
+    <link id="base-css" rel="stylesheet" href="themes/_base.css">
+    <link id="styles-css" rel="stylesheet" href="themes/_styles.css">
+    <link id="theme-css" rel="stylesheet" href="">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: var(--paper, #fff);
+        }
+        article {
+            padding: 20px;
+            transform: scale(0.5);
+            transform-origin: top left;
+            width: 200%;
+            height: 200%;
+        }
+        /* Fade transition for theme changes */
+        article.fading {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <article></article>
+    <script>
+        const params = new URLSearchParams(location.search);
+        const themeCss = document.getElementById('theme-css');
+        const article = document.querySelector('article');
+
+        // Load initial document
+        const docPath = params.get('doc');
+        if (docPath) {
+            fetch(docPath)
+                .then(r => r.text())
+                .then(md => {
+                    article.innerHTML = marked.parse(md);
+                })
+                .catch(err => {
+                    article.innerHTML = '<p>Error loading document</p>';
+                });
+        }
+
+        // Load initial theme
+        const themePath = params.get('theme');
+        if (themePath) {
+            themeCss.href = themePath;
+        }
+
+        // Listen for theme changes from parent
+        window.addEventListener('message', (e) => {
+            if (e.data && e.data.theme) {
+                themeCss.href = e.data.theme;
+            }
+        });
+    </script>
+</body>
+</html>

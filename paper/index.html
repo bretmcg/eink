@@ -3,17 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paper - Theme Picker</title>
-
-    <!-- Configuration loaded from JSON files -->
+    <title>Paper</title>
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         :root {
-            /* Picker UI colors */
             --bg: #ffffff;
             --fg: #000000;
-            /* Theme system fallbacks */
             --ink: #000000;
             --paper: #ffffff;
         }
@@ -27,95 +23,68 @@
         h1 {
             margin: 0 0 20px 0;
         }
-        .picker {
-            border: 4px solid var(--fg);
-            padding: 20px;
-            max-width: 400px;
-        }
-        label {
-            display: block;
-            font-weight: 900;
-            margin-bottom: 10px;
-        }
-        /* Custom dropdown */
-        .dropdown {
-            position: relative;
-            margin-bottom: 20px;
-        }
-        .dropdown-trigger {
-            width: 100%;
-            padding: 15px 20px;
-            font-size: 1rem;
-            font-weight: 900;
-            font-family: monospace;
-            border: 4px solid var(--fg);
-            background: var(--bg);
-            color: var(--fg);
-            cursor: pointer;
-            text-align: left;
-        }
-        .dropdown-trigger:active {
-            background: var(--fg);
-            color: var(--bg);
-        }
-        .dropdown-panel {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            border: 4px solid var(--fg);
-            border-top: none;
-            background: var(--bg);
-            z-index: 100;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        .dropdown.active .dropdown-panel {
-            display: block;
-        }
-        .dropdown-option {
-            display: block;
-            width: 100%;
-            padding: 12px 20px;
-            font-size: 1rem;
-            font-weight: 900;
-            font-family: monospace;
-            border: none;
-            border-bottom: 2px solid var(--fg);
-            background: var(--bg);
-            color: var(--fg);
-            cursor: pointer;
-            text-align: left;
-        }
-        .dropdown-option:last-child {
-            border-bottom: none;
-        }
-        .dropdown-option:active,
-        .dropdown-option.selected {
-            background: var(--fg);
-            color: var(--bg);
-        }
-        button {
-            width: 100%;
-            padding: 20px;
-            font-size: 1.5rem;
-            font-weight: 900;
-            font-family: monospace;
-            border: 4px solid var(--fg);
-            background: var(--bg);
-            color: var(--fg);
-            cursor: pointer;
-        }
-        button:active {
-            background: var(--fg);
-            color: var(--bg);
-        }
         .back-link {
             display: inline-block;
             margin-bottom: 15px;
             color: var(--fg);
             font-weight: 900;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            margin: 0;
+        }
+
+        /* Gallery grid */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .tile {
+            position: relative;
+            aspect-ratio: 3/4;
+            border: 4px solid var(--fg);
+            cursor: pointer;
+            overflow: hidden;
+            background: var(--bg);
+        }
+
+        .tile:hover {
+            border-color: #666;
+        }
+
+        .tile-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 10px;
+            background: var(--bg);
+            border-top: 2px solid var(--fg);
+            font-weight: 900;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            z-index: 10;
+        }
+
+        .tile iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .tile iframe.fading {
+            opacity: 0;
         }
 
         /* Fullscreen reader */
@@ -134,13 +103,12 @@
         #reader.active {
             display: block;
         }
-        /* Content container - themes use @scope (article) */
         #reader article {
             display: block;
             padding: 40px;
             margin: 0 auto;
         }
-        /* Floating reader buttons - borderless mod style */
+        /* Floating reader buttons */
         .reader-btn {
             position: fixed;
             top: 10px;
@@ -164,9 +132,6 @@
         .reader-btn:hover {
             opacity: 1;
         }
-        .reader-btn:active {
-            opacity: 1;
-        }
         #options-btn {
             right: 10px;
         }
@@ -183,14 +148,14 @@
         #minimize-btn {
             right: 170px;
         }
-        /* Hide - D T X when collapsed */
         .reader-controls.collapsed #minimize-btn,
         .reader-controls.collapsed #doc-btn,
         .reader-controls.collapsed #theme-btn,
         .reader-controls.collapsed #close-btn {
             display: none;
         }
-        #theme-panel {
+        #theme-panel,
+        #doc-panel {
             display: none;
             position: fixed;
             top: 60px;
@@ -204,17 +169,6 @@
         #theme-panel.active,
         #doc-panel.active {
             display: block;
-        }
-        #doc-panel {
-            display: none;
-            position: fixed;
-            top: 60px;
-            right: 10px;
-            border: 4px solid var(--fg);
-            background: var(--bg);
-            z-index: 10000;
-            max-height: 80vh;
-            overflow-y: auto;
         }
         .doc-option,
         .theme-option {
@@ -248,23 +202,11 @@
 <body>
     <a href="../index.html" class="back-link">&larr; Back</a>
 
-    <div class="picker">
+    <div class="header">
         <h1>Paper</h1>
-
-        <label>Document:</label>
-        <div class="dropdown" id="doc-dropdown">
-            <button class="dropdown-trigger" id="doc-trigger">Select document...</button>
-            <div class="dropdown-panel" id="doc-picker-panel"></div>
-        </div>
-
-        <label>Theme:</label>
-        <div class="dropdown" id="theme-dropdown">
-            <button class="dropdown-trigger" id="theme-trigger">Select theme...</button>
-            <div class="dropdown-panel" id="theme-picker-panel"></div>
-        </div>
-
-        <button id="open-btn">Open</button>
     </div>
+
+    <div class="gallery" id="gallery"></div>
 
     <div id="reader">
         <div id="reader-controls" class="reader-controls collapsed">
@@ -276,31 +218,19 @@
         </div>
         <div id="doc-panel"></div>
         <div id="theme-panel"></div>
-        <!-- Base theme system (loaded first) -->
         <link id="base-vars-css" rel="stylesheet" href="">
         <link id="base-styles-css" rel="stylesheet" href="">
-        <!-- E-ink optimizations (auto-applied via media query) -->
         <link rel="stylesheet" href="themes/_eink.css">
-        <!-- Theme overrides (loaded dynamically) -->
         <link id="theme-css" rel="stylesheet" href="">
         <article></article>
     </div>
 
     <script>
-        // Configuration data (loaded from JSON)
         let DOCUMENTS = [];
         let THEMES = [];
 
-        // Picker elements
-        const docDropdown = document.getElementById('doc-dropdown');
-        const docTrigger = document.getElementById('doc-trigger');
-        const docPickerPanel = document.getElementById('doc-picker-panel');
-        const themeDropdown = document.getElementById('theme-dropdown');
-        const themeTrigger = document.getElementById('theme-trigger');
-        const themePickerPanel = document.getElementById('theme-picker-panel');
-        const openBtn = document.getElementById('open-btn');
-
         // Reader elements
+        const gallery = document.getElementById('gallery');
         const readerControls = document.getElementById('reader-controls');
         const minimizeBtn = document.getElementById('minimize-btn');
         const optionsBtn = document.getElementById('options-btn');
@@ -315,11 +245,10 @@
         const baseStylesCss = document.getElementById('base-styles-css');
         const themeCss = document.getElementById('theme-css');
 
-        // Track selections
         let selectedDoc = null;
         let selectedTheme = null;
+        const tileData = new Map(); // Store per-tile state
 
-        // Helper to load a document
         async function loadDocument(file) {
             const response = await fetch(file);
             if (!response.ok) throw new Error('Document not found');
@@ -328,123 +257,153 @@
             reader.scrollTop = 0;
         }
 
-        // Close all picker dropdowns
-        function closePickerDropdowns() {
-            docDropdown.classList.remove('active');
-            themeDropdown.classList.remove('active');
+        function createGallery() {
+            DOCUMENTS.forEach((doc, docIndex) => {
+                const tile = document.createElement('div');
+                tile.className = 'tile';
+                tile.dataset.doc = doc.file;
+
+                // Pick a random starting theme for variety
+                const startThemeIndex = Math.floor(Math.random() * THEMES.length);
+                const startTheme = THEMES[startThemeIndex];
+                tile.dataset.currentTheme = startTheme.file;
+                tile.dataset.themeIndex = startThemeIndex;
+
+                const title = document.createElement('div');
+                title.className = 'tile-title';
+                title.textContent = doc.name;
+
+                const iframe = document.createElement('iframe');
+                iframe.src = `preview.html?doc=${encodeURIComponent(doc.file)}&theme=${encodeURIComponent(startTheme.file)}`;
+
+                tile.appendChild(iframe);
+                tile.appendChild(title);
+
+                // Click opens reader with current theme
+                tile.addEventListener('click', () => {
+                    openReader(doc, THEMES.find(t => t.file === tile.dataset.currentTheme));
+                });
+
+                gallery.appendChild(tile);
+
+                // Store tile data
+                tileData.set(tile, {
+                    doc: doc,
+                    themeIndex: startThemeIndex
+                });
+            });
+
+            startThemeCycling();
         }
 
-        // Initialize UI after loading config
-        function initializeUI() {
-            selectedDoc = DOCUMENTS[0];
-            selectedTheme = THEMES[0];
-
-            // Populate document picker and reader panel
-            DOCUMENTS.forEach((doc, i) => {
-            // Picker dropdown option
-            const pickerBtn = document.createElement('button');
-            pickerBtn.className = 'dropdown-option' + (i === 0 ? ' selected' : '');
-            pickerBtn.textContent = doc.name;
-            pickerBtn.addEventListener('click', () => {
-                selectedDoc = doc;
-                docTrigger.textContent = doc.name;
-                docPickerPanel.querySelectorAll('.dropdown-option').forEach(b => b.classList.remove('selected'));
-                pickerBtn.classList.add('selected');
-                closePickerDropdowns();
+        function startThemeCycling() {
+            const tiles = gallery.querySelectorAll('.tile');
+            tiles.forEach((tile, i) => {
+                // Stagger the start so tiles don't all change at once
+                setTimeout(() => {
+                    setInterval(() => cycleTheme(tile), 10000);
+                }, i * 800);
             });
-            docPickerPanel.appendChild(pickerBtn);
-
-            // Reader panel option
-            const readerBtn = document.createElement('button');
-            readerBtn.className = 'doc-option';
-            readerBtn.textContent = doc.name;
-            readerBtn.dataset.doc = doc.file;
-            readerBtn.addEventListener('click', async () => {
-                try {
-                    await loadDocument(doc.file);
-                    selectedDoc = doc;
-                    docPanel.classList.remove('active');
-                    docPanel.querySelectorAll('.doc-option').forEach(b => b.classList.remove('current'));
-                    readerBtn.classList.add('current');
-                    // Sync picker
-                    docTrigger.textContent = doc.name;
-                    docPickerPanel.querySelectorAll('.dropdown-option').forEach(b => b.classList.remove('selected'));
-                    pickerBtn.classList.add('selected');
-                } catch (err) {
-                    alert('Error loading document: ' + err.message);
-                }
-            });
-            docPanel.appendChild(readerBtn);
-        });
-
-        // Populate theme picker and reader panel
-        THEMES.forEach((theme, i) => {
-            // Picker dropdown option
-            const pickerBtn = document.createElement('button');
-            pickerBtn.className = 'dropdown-option' + (i === 0 ? ' selected' : '');
-            pickerBtn.textContent = theme.name;
-            pickerBtn.addEventListener('click', () => {
-                selectedTheme = theme;
-                themeTrigger.textContent = theme.name;
-                themePickerPanel.querySelectorAll('.dropdown-option').forEach(b => b.classList.remove('selected'));
-                pickerBtn.classList.add('selected');
-                closePickerDropdowns();
-            });
-            themePickerPanel.appendChild(pickerBtn);
-
-            // Reader panel option
-            const readerBtn = document.createElement('button');
-            readerBtn.className = 'theme-option';
-            readerBtn.textContent = theme.name;
-            readerBtn.dataset.theme = theme.file;
-            readerBtn.addEventListener('click', () => {
-                themeCss.href = theme.file;
-                selectedTheme = theme;
-                themePanel.classList.remove('active');
-                themePanel.querySelectorAll('.theme-option').forEach(b => b.classList.remove('current'));
-                readerBtn.classList.add('current');
-                // Sync picker
-                themeTrigger.textContent = theme.name;
-                themePickerPanel.querySelectorAll('.dropdown-option').forEach(b => b.classList.remove('selected'));
-                pickerBtn.classList.add('selected');
-            });
-            themePanel.appendChild(readerBtn);
-        });
-
-            // Set initial trigger text
-            docTrigger.textContent = selectedDoc.name;
-            themeTrigger.textContent = selectedTheme.name;
         }
 
-        // Picker dropdown toggles
-        docTrigger.addEventListener('click', () => {
-            themeDropdown.classList.remove('active');
-            docDropdown.classList.toggle('active');
-        });
+        function cycleTheme(tile) {
+            const iframe = tile.querySelector('iframe');
+            const data = tileData.get(tile);
 
-        themeTrigger.addEventListener('click', () => {
-            docDropdown.classList.remove('active');
-            themeDropdown.classList.toggle('active');
-        });
+            // Fade out
+            iframe.classList.add('fading');
 
-        // Close picker dropdowns when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.dropdown')) {
-                closePickerDropdowns();
+            setTimeout(() => {
+                // Move to next theme
+                data.themeIndex = (data.themeIndex + 1) % THEMES.length;
+                const nextTheme = THEMES[data.themeIndex];
+                tile.dataset.currentTheme = nextTheme.file;
+
+                // Send message to iframe to change theme
+                iframe.contentWindow.postMessage({ theme: nextTheme.file }, '*');
+
+                // Fade in
+                setTimeout(() => {
+                    iframe.classList.remove('fading');
+                }, 50);
+            }, 300);
+        }
+
+        function openReader(doc, theme) {
+            selectedDoc = doc;
+            selectedTheme = theme;
+
+            loadDocument(doc.file);
+
+            baseVarsCss.href = 'themes/_base.css';
+            baseStylesCss.href = 'themes/_styles.css';
+            themeCss.href = theme.file;
+
+            // Mark current selections in reader panels
+            docPanel.querySelectorAll('.doc-option').forEach(btn => {
+                btn.classList.toggle('current', btn.dataset.doc === doc.file);
+            });
+            themePanel.querySelectorAll('.theme-option').forEach(btn => {
+                btn.classList.toggle('current', btn.dataset.theme === theme.file);
+            });
+
+            reader.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            if (reader.requestFullscreen) {
+                reader.requestFullscreen().catch(() => {});
+            } else if (reader.webkitRequestFullscreen) {
+                reader.webkitRequestFullscreen();
             }
-        });
+        }
 
-        // Options button toggles D T X visibility
+        function initializeReaderPanels() {
+            // Populate document panel
+            DOCUMENTS.forEach(doc => {
+                const btn = document.createElement('button');
+                btn.className = 'doc-option';
+                btn.textContent = doc.name;
+                btn.dataset.doc = doc.file;
+                btn.addEventListener('click', async () => {
+                    try {
+                        await loadDocument(doc.file);
+                        selectedDoc = doc;
+                        docPanel.classList.remove('active');
+                        docPanel.querySelectorAll('.doc-option').forEach(b => b.classList.remove('current'));
+                        btn.classList.add('current');
+                    } catch (err) {
+                        alert('Error loading document: ' + err.message);
+                    }
+                });
+                docPanel.appendChild(btn);
+            });
+
+            // Populate theme panel
+            THEMES.forEach(theme => {
+                const btn = document.createElement('button');
+                btn.className = 'theme-option';
+                btn.textContent = theme.name;
+                btn.dataset.theme = theme.file;
+                btn.addEventListener('click', () => {
+                    themeCss.href = theme.file;
+                    selectedTheme = theme;
+                    themePanel.classList.remove('active');
+                    themePanel.querySelectorAll('.theme-option').forEach(b => b.classList.remove('current'));
+                    btn.classList.add('current');
+                });
+                themePanel.appendChild(btn);
+            });
+        }
+
+        // Reader button handlers
         optionsBtn.addEventListener('click', () => {
             readerControls.classList.toggle('collapsed');
-            // Close panels when collapsing
             if (readerControls.classList.contains('collapsed')) {
                 docPanel.classList.remove('active');
                 themePanel.classList.remove('active');
             }
         });
 
-        // Minimize button exits fullscreen
         minimizeBtn.addEventListener('click', () => {
             if (document.fullscreenElement) {
                 document.exitFullscreen();
@@ -453,7 +412,6 @@
             }
         });
 
-        // Reader panel toggles
         docBtn.addEventListener('click', () => {
             docPanel.classList.toggle('active');
             themePanel.classList.remove('active');
@@ -464,35 +422,6 @@
             docPanel.classList.remove('active');
         });
 
-        openBtn.addEventListener('click', async () => {
-            try {
-                await loadDocument(selectedDoc.file);
-
-                baseVarsCss.href = 'themes/_base.css';
-                baseStylesCss.href = 'themes/_styles.css';
-                themeCss.href = selectedTheme.file;
-
-                // Mark current selections in reader panels
-                docPanel.querySelectorAll('.doc-option').forEach(btn => {
-                    btn.classList.toggle('current', btn.dataset.doc === selectedDoc.file);
-                });
-                themePanel.querySelectorAll('.theme-option').forEach(btn => {
-                    btn.classList.toggle('current', btn.dataset.theme === selectedTheme.file);
-                });
-
-                reader.classList.add('active');
-                document.body.style.overflow = 'hidden';
-
-                if (reader.requestFullscreen) {
-                    reader.requestFullscreen().catch(() => {});
-                } else if (reader.webkitRequestFullscreen) {
-                    reader.webkitRequestFullscreen();
-                }
-            } catch (err) {
-                alert('Error loading document: ' + err.message);
-            }
-        });
-
         closeBtn.addEventListener('click', () => {
             reader.classList.remove('active');
             docPanel.classList.remove('active');
@@ -500,7 +429,7 @@
             document.body.style.overflow = '';
 
             if (document.fullscreenElement) {
-                document.exitFullscreen(); //.. ok!
+                document.exitFullscreen();
             } else if (document.webkitFullscreenElement) {
                 document.webkitExitFullscreen();
             }
@@ -519,7 +448,8 @@
         ]).then(([docs, themes]) => {
             DOCUMENTS = docs;
             THEMES = themes;
-            initializeUI();
+            initializeReaderPanels();
+            createGallery();
         }).catch(err => {
             console.error('Failed to load configuration:', err);
             alert('Failed to load configuration files');
@@ -527,4 +457,3 @@
     </script>
 </body>
 </html>
-
