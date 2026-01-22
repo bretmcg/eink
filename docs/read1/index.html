@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Zen Reader</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="content"></div>
+    <script>
+        // 1. Fetch the markdown file
+        fetch('document.md')
+            .then(response => response.text())
+            .then(text => {
+                // 2. Convert to HTML and inject
+                document.getElementById('content').innerHTML = marked.parse(text);
+            });
+
+        // Optional: Auto-refresh every 5 seconds if not using a live-server that does it for you
+        // setTimeout(() => location.reload(), 5000); 
+    </script>
+</body>
+</html>
+
