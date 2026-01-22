@@ -1,0 +1,81 @@
+# Paper - Document Picker
+
+A gallery-style document picker with live theme previews, optimized for e-ink displays.
+
+## Files
+
+| File | Purpose |
+|------|---------|
+| `index.html` | Main entry point |
+| `styles.css` | Gallery and reader styles |
+| `gallery.js` | Gallery logic, animation patterns |
+| `card-design.js` | Card visual design module |
+| `card-designs.json` | Card design presets |
+| `preview.html` | Lightweight iframe preview renderer |
+| `documents.json` | Document list |
+| `themes.json` | Theme list |
+
+## Animation Timing
+
+The gallery uses "popcorn style" random animations where tiles change themes at random intervals.
+
+```javascript
+// In gallery.js - patternRandom()
+const nextDelay = 1500 + Math.random() * 3000;  // 1.5-4.5 seconds between pops
+```
+
+### Available Patterns
+
+- `patternRandom` - Random tile, random timing (current)
+- `patternStaggered` - Each tile on its own timer
+- `patternWave` - Left to right sequential
+- `patternSync` - All tiles change together
+
+Change pattern in `startThemeCycling()`.
+
+## Card Designs
+
+Designs are defined in `card-designs.json`. Current designs:
+
+- `jack-of-diamonds` - Playing card style with J♦ corner pips, asymmetric borders
+- `default` (Tarot) - Ornate borders with corner dots
+- `minimal` - Clean simple rectangle
+- `rounded` - Soft rounded corners
+- `thick` - Bold heavy border
+
+### Switching Designs
+
+In `gallery.js`:
+```javascript
+CardDesign.init('jack-of-diamonds')  // on load
+```
+
+Or in browser console:
+```javascript
+CardDesign.applyDesign('minimal')  // hot-swap
+```
+
+### Design Config Options
+
+```json
+{
+  "borderRadius": "12px",
+  "borderWidth": "2px",
+  "innerBorderOffset": "12px",
+  "cornerDotSize": "2px",
+  "aspectRatio": "2.5/4",
+  "outerShadowWidth": "6px",
+  "innerShadowWidth": "8px",
+  "borderColors": {
+    "top": "var(--fg)",
+    "right": "var(--fg)",
+    "bottom": "#fff",
+    "left": "#fff"
+  },
+  "cornerPip": {
+    "symbol": "♦",
+    "letter": "J",
+    "color": "var(--fg)"
+  }
+}
+```
