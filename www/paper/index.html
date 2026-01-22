@@ -202,9 +202,6 @@
         .reader-btn:active {
             opacity: 1;
         }
-        #minimize-btn {
-            left: 10px;
-        }
         #options-btn {
             right: 10px;
         }
@@ -218,7 +215,11 @@
         #doc-btn {
             right: 130px;
         }
-        /* Hide D T X when collapsed */
+        #minimize-btn {
+            right: 170px;
+        }
+        /* Hide - D T X when collapsed */
+        .reader-controls.collapsed #minimize-btn,
         .reader-controls.collapsed #doc-btn,
         .reader-controls.collapsed #theme-btn,
         .reader-controls.collapsed #close-btn {
