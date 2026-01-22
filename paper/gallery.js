@@ -280,20 +280,31 @@ function normalizeJsonDocuments(docs) {
     }));
 }
 
-// Normalize feed.rss.md.json format to standard document format
-function normalizeFeedDocuments(feed) {
+// Load articles from index files listed in articles.json
+// Each index file's markdown paths are relative to its own directory
+async function loadArticles(indexPaths) {
     const docs = [];
-    for (const publication of feed) {
-        if (!publication.posts || publication.posts.length === 0) continue;
-        for (const post of publication.posts) {
-            docs.push({
-                file: post['output.md'],
-                name: post.title,
-                creationDate: post.date || null,
-                editDate: null,
-                publication: publication.publication,
-                url: post['input.http']
-            });
+    for (const indexPath of indexPaths) {
+        try {
+            const response = await fetch(indexPath);
+            const feed = await response.json();
+            const baseDir = indexPath.substring(0, indexPath.lastIndexOf('/') + 1);
+
+            for (const publication of feed) {
+                if (!publication.posts || publication.posts.length === 0) continue;
+                for (const post of publication.posts) {
+                    docs.push({
+                        file: baseDir + post['output.md'],
+                        name: post.title,
+                        creationDate: post.date || null,
+                        editDate: null,
+                        publication: publication.publication,
+                        url: post['input.http']
+                    });
+                }
+            }
+        } catch (e) {
+            console.warn(`Failed to load article index: ${indexPath}`, e);
         }
     }
     return docs;
@@ -317,15 +328,15 @@ function parseTextFileList(text) {
 // Load configuration and initialize
 Promise.all([
     fetch('documents.json').then(r => r.json()).catch(() => []),
-    fetch('feed.rss.md.json').then(r => r.json()).catch(() => []),
+    fetch('articles.json').then(r => r.json()).catch(() => []),
     fetch('documents.txt').then(r => r.text()).catch(() => ''),
     fetch('themes.json').then(r => r.json()),
     CardDesign.init('rascal-of-diamonds')
-]).then(([docs, feed, textList, themes]) => {
+]).then(async ([docs, articleIndexPaths, textList, themes]) => {
     const jsonDocs = normalizeJsonDocuments(docs);
-    const feedDocs = normalizeFeedDocuments(feed);
+    const articleDocs = await loadArticles(articleIndexPaths);
     const textDocs = parseTextFileList(textList);
-    const allDocs = [...jsonDocs, ...feedDocs, ...textDocs];
+    const allDocs = [...jsonDocs, ...articleDocs, ...textDocs];
 
     // Sort: null dates first (reverse load order), then by date descending
     const undated = allDocs.filter(d => !d.creationDate).reverse();
