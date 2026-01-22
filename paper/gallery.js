@@ -273,7 +273,7 @@ document.addEventListener('keydown', (e) => {
 Promise.all([
     fetch('documents.json').then(r => r.json()),
     fetch('themes.json').then(r => r.json()),
-    CardDesign.init('jack-of-diamonds')
+    CardDesign.init('rascal-of-diamonds')
 ]).then(([docs, themes]) => {
     DOCUMENTS = docs;
     THEMES = themes;

@@ -43,6 +43,7 @@ const CardDesign = {
         const hasShadow = c.outerShadowWidth !== '0';
         const hasCornerPip = c.cornerPip;
         const hasBorderColors = c.borderColors;
+        const hasBackgroundImage = c.backgroundImage;
 
         return `
             .tile-card {
@@ -61,6 +62,12 @@ const CardDesign = {
                 ` : `border: ${c.borderWidth} solid var(--fg);`}
                 overflow: hidden;
                 ${hasShadow ? `box-shadow: inset 0 0 0 ${c.outerShadowWidth} var(--bg), inset 0 0 0 ${c.innerShadowWidth} var(--fg);` : ''}
+                ${hasBackgroundImage ? `
+                background-image: url('${c.backgroundImage}');
+                background-size: 100% 100%;
+                background-position: center;
+                background-repeat: no-repeat;
+                ` : ''}
             }
 
             ${hasInnerBorder ? `

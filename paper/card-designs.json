@@ -1,6 +1,6 @@
 {
-  "jack-of-diamonds": {
-    "name": "Jack of Diamonds",
+  "rascal-of-diamonds": {
+    "name": "Rascal of Diamonds",
     "description": "Playing card style with J♦ corner pips",
     "borderRadius": "12px",
     "borderWidth": "2px",
@@ -10,11 +10,12 @@
     "outerShadowWidth": "6px",
     "innerShadowWidth": "8px",
     "borderColors": {
-      "top": "var(--fg)",
-      "right": "var(--fg)",
+      "top": "#fff",
+      "right": "#fff",
       "bottom": "#fff",
       "left": "#fff"
     },
+    "backgroundImage": "assets/raccoon-of-diamonds.png",
     "cornerPip": {
       "symbol": "♦",
       "letter": "J",
