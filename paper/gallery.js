@@ -41,14 +41,21 @@ function createGallery() {
         tile.dataset.currentTheme = startTheme.file;
         tile.dataset.themeIndex = startThemeIndex;
 
-        const title = document.createElement('div');
-        title.className = 'tile-title';
-        title.textContent = doc.name;
+        // Card frame
+        const card = document.createElement('div');
+        card.className = 'tile-card';
 
         const iframe = document.createElement('iframe');
         iframe.src = `preview.html?doc=${encodeURIComponent(doc.file)}&theme=${encodeURIComponent(startTheme.file)}`;
 
-        tile.appendChild(iframe);
+        card.appendChild(iframe);
+        tile.appendChild(card);
+
+        // Title below card - use filename
+        const title = document.createElement('div');
+        title.className = 'tile-title';
+        const filename = doc.file.split('/').pop().replace('.md', '');
+        title.textContent = filename;
         tile.appendChild(title);
 
         // Click opens reader with current theme
@@ -129,7 +136,7 @@ function startThemeCycling() {
 }
 
 function cycleTheme(tile) {
-    const iframe = tile.querySelector('iframe');
+    const iframe = tile.querySelector('.tile-card iframe');
     const data = tileData.get(tile);
 
     // Fade out

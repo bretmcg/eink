@@ -33,40 +33,76 @@ h1 {
 /* Gallery grid */
 .gallery {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 40px;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 30px 20px;
+    padding: 10px;
 }
 
 .tile {
-    position: relative;
-    aspect-ratio: 3/4;
-    border: 8px solid var(--fg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     cursor: pointer;
-    overflow: hidden;
-    background: var(--bg);
 }
 
-.tile:hover {
-    border-color: transparent;
+.tile-card {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2.5/4;
+    background: var(--bg);
+    border-radius: 12px;
+    border: 2px solid var(--fg);
+    overflow: hidden;
+    box-shadow: inset 0 0 0 6px var(--bg), inset 0 0 0 8px var(--fg);
+}
+
+.tile-card::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    border: 1px solid var(--fg);
+    border-radius: 4px;
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* Corner ornaments */
+.tile-card::after {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+    background:
+        radial-gradient(circle at 0 0, var(--fg) 2px, transparent 2px),
+        radial-gradient(circle at 100% 0, var(--fg) 2px, transparent 2px),
+        radial-gradient(circle at 0 100%, var(--fg) 2px, transparent 2px),
+        radial-gradient(circle at 100% 100%, var(--fg) 2px, transparent 2px);
+    pointer-events: none;
+    z-index: 5;
+}
+
+.tile:hover .tile-card {
+    border-color: #666;
+    box-shadow: inset 0 0 0 6px var(--bg), inset 0 0 0 8px #666;
 }
 
 .tile-title {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding: 20px 10px;
-    background: var(--fg);
-    color: var(--bg);
-    border-bottom: 2px solid var(--fg);
+    margin-top: 8px;
+    padding: 0 4px;
     font-weight: 900;
-    font-size: 0.9rem;
-    letter-spacing: 0.02em;
-    -webkit-font-smoothing: antialiased;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-align: center;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    z-index: 10;
+    max-width: 100%;
 }
 
 .tile iframe {
