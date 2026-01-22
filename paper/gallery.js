@@ -270,9 +270,10 @@ document.addEventListener('keydown', (e) => {
 });
 
 // Normalize documents.json format to include date fields
+// Files in documents.json are relative to documents/ directory
 function normalizeJsonDocuments(docs) {
     return docs.map(doc => ({
-        file: doc.file,
+        file: 'documents/' + doc.file,
         name: doc.name,
         creationDate: null,
         editDate: null
@@ -317,14 +318,21 @@ function parseTextFileList(text) {
 Promise.all([
     fetch('documents.json').then(r => r.json()).catch(() => []),
     fetch('feed.rss.md.json').then(r => r.json()).catch(() => []),
-    fetch('documents/00-documents.txt').then(r => r.text()).catch(() => ''),
+    fetch('documents.txt').then(r => r.text()).catch(() => ''),
     fetch('themes.json').then(r => r.json()),
     CardDesign.init('rascal-of-diamonds')
 ]).then(([docs, feed, textList, themes]) => {
     const jsonDocs = normalizeJsonDocuments(docs);
     const feedDocs = normalizeFeedDocuments(feed);
     const textDocs = parseTextFileList(textList);
-    DOCUMENTS = [...jsonDocs, ...feedDocs, ...textDocs];
+    const allDocs = [...jsonDocs, ...feedDocs, ...textDocs];
+
+    // Sort: null dates first (reverse load order), then by date descending
+    const undated = allDocs.filter(d => !d.creationDate).reverse();
+    const dated = allDocs.filter(d => d.creationDate)
+        .sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate));
+    DOCUMENTS = [...undated, ...dated];
+
     THEMES = themes;
     initializeReaderPanels();
     createGallery();
