@@ -10,10 +10,11 @@
     <link id="theme-css" rel="stylesheet" href="">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
-        body {
+        /* Force transparency so card frame shows through */
+        html, body {
             margin: 0;
             overflow: hidden;
-            background: transparent;
+            background: transparent !important;
         }
         article {
             padding: 30px 15px 15px 15px;
@@ -21,6 +22,7 @@
             transform-origin: top left;
             width: 286%;
             height: 286%;
+            background: white !important; /* content area is white */
         }
         /* Fade transition for theme changes */
         article.fading {

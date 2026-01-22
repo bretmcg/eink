@@ -63,10 +63,7 @@ const CardDesign = {
                 overflow: hidden;
                 ${hasShadow ? `box-shadow: inset 0 0 0 ${c.outerShadowWidth} var(--bg), inset 0 0 0 ${c.innerShadowWidth} var(--fg);` : ''}
                 ${hasBackgroundImage ? `
-                background-image: url('${c.backgroundImage}');
-                background-size: 100% 100%;
-                background-position: center;
-                background-repeat: no-repeat;
+                background: white;
                 ` : ''}
             }
 
@@ -151,6 +148,23 @@ const CardDesign = {
             .tile-card iframe.fading {
                 opacity: 0;
             }
+
+            ${hasBackgroundImage ? `
+            /* Frame overlay - sits on top of content */
+            .tile-card .frame-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: url('${c.backgroundImage}');
+                background-size: 100% 100%;
+                background-position: center;
+                background-repeat: no-repeat;
+                pointer-events: none;
+                z-index: 10;
+            }
+            ` : ''}
         `;
     },
 
@@ -159,8 +173,15 @@ const CardDesign = {
         const card = document.createElement('div');
         card.className = 'tile-card';
 
-        // Add corner pips if design has them
-        if (this.config.cornerPip) {
+        // Add frame overlay if design has backgroundImage
+        if (this.config.backgroundImage) {
+            const overlay = document.createElement('div');
+            overlay.className = 'frame-overlay';
+            card.appendChild(overlay);
+        }
+
+        // Add corner pips if design has them (and no background image)
+        if (this.config.cornerPip && !this.config.backgroundImage) {
             const pip = this.config.cornerPip;
 
             // Top-left pip
