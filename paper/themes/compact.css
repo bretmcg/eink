@@ -1,0 +1,45 @@
+/* Compact - Dense reading for long documents */
+
+/* Variable overrides */
+:root {
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --font-size-base: 14px;
+  --font-size-h1: 1.8em;
+  --font-size-h2: 1.2em;
+
+  --line-height: 1.4;
+  --max-width: 900px;
+
+  --spacing-md: 0.5em;
+}
+
+@scope (article) {
+  :scope {
+    column-count: 2;
+    column-gap: 40px;
+  }
+
+  h1 {
+    column-span: all;
+  }
+
+  h2 {
+    margin-top: 1em;
+  }
+
+  p {
+    margin: 0.5em 0;
+  }
+
+  pre {
+    column-span: all;
+  }
+
+  @media (max-width: 600px) {
+    :scope {
+      column-count: 1;
+    }
+  }
+}

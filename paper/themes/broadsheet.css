@@ -1,0 +1,186 @@
+/* Broadsheet - Elegant newspaper/journal typography */
+
+/* Variable overrides */
+:root {
+  --font-body: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-heading: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-mono: "SF Mono", Menlo, Monaco, monospace;
+
+  --font-size-base: 19px;
+  --font-size-h1: 3rem;
+  --font-size-h2: 1.6rem;
+  --font-size-h3: 1.2rem;
+  --font-size-code: 0.85em;
+
+  --line-height: 1.7;
+  --max-width: 750px;
+
+  --border-thin: 1px;
+  --border-thick: 4px;
+
+  --code-bg: transparent;
+  --code-fg: var(--ink);
+}
+
+@scope (article) {
+  :scope {
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  /* Drop cap for first paragraph */
+  p:first-of-type::first-letter {
+    float: left;
+    font-size: 4.5em;
+    line-height: 0.8;
+    padding-right: 0.1em;
+    padding-top: 0.05em;
+    font-weight: 700;
+  }
+
+  h1 {
+    font-weight: 400;
+    font-style: italic;
+    text-align: center;
+    letter-spacing: 0.02em;
+    border-bottom: var(--border-thin) solid var(--ink);
+    border-top: var(--border-thick) solid var(--ink);
+    padding: 0.5em 0;
+    margin: 0 0 1em 0;
+  }
+
+  h2 {
+    font-weight: 400;
+    font-style: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    text-align: center;
+    border-bottom: none;
+    margin-top: 2.5em;
+    margin-bottom: 1em;
+  }
+
+  h2::before,
+  h2::after {
+    content: '—';
+    padding: 0 0.5em;
+  }
+
+  h3 {
+    font-weight: 700;
+    font-style: italic;
+    margin-top: 2em;
+  }
+
+  p {
+    margin: 0;
+    text-indent: 1.5em;
+  }
+
+  p:first-of-type,
+  h2 + p,
+  h3 + p,
+  blockquote + p,
+  pre + p,
+  ul + p,
+  ol + p {
+    text-indent: 0;
+  }
+
+  blockquote {
+    font-size: 1.4rem;
+    font-style: italic;
+    font-weight: 400;
+    text-align: center;
+    text-indent: 0;
+    border-left: none;
+    border-top: var(--border-medium) solid var(--ink);
+    border-bottom: var(--border-medium) solid var(--ink);
+    padding: 1em 2em;
+    margin: 2em 0;
+    max-width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  blockquote p {
+    text-indent: 0;
+    text-align: center;
+  }
+
+  hr {
+    border: none;
+    text-align: center;
+    margin: 2em 0;
+  }
+
+  hr::before {
+    content: '* * *';
+    letter-spacing: 1em;
+  }
+
+  ul, ol {
+    margin: 1.5em 0;
+    padding-left: 1.5em;
+  }
+
+  li {
+    margin: 0.3em 0;
+    text-align: left;
+  }
+
+  code {
+    border: var(--border-thin) solid var(--ink);
+    padding: 0.1em 0.3em;
+  }
+
+  pre {
+    background: transparent;
+    color: var(--ink);
+    border: var(--border-thin) solid var(--ink);
+    border-left: var(--border-thick) solid var(--ink);
+    padding: 1.5em;
+    text-align: left;
+  }
+
+  pre code {
+    border: none;
+    padding: 0;
+  }
+
+  strong {
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  a {
+    text-decoration: none;
+    border-bottom: var(--border-thin) solid var(--ink);
+  }
+
+  table {
+    font-size: 0.9em;
+    margin: 2em auto;
+    border: var(--border-thin) solid var(--ink);
+  }
+
+  th {
+    background: transparent;
+    color: var(--ink);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85em;
+    letter-spacing: 0.1em;
+    border: var(--border-thin) solid var(--ink);
+  }
+
+  td {
+    border: var(--border-thin) solid var(--ink);
+  }
+
+  img {
+    display: block;
+    margin: 2em auto;
+    border: var(--border-thin) solid var(--ink);
+  }
+}

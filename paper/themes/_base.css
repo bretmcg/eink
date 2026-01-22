@@ -1,0 +1,55 @@
+/* =============================================
+   E-INK THEME SYSTEM - BASE VARIABLES
+   =============================================
+   This file defines the "contract" - all CSS
+   variables that themes can/should override.
+   ============================================= */
+
+:root {
+  /* ===== CORE COLORS ===== */
+  --ink: #000000;           /* Primary text/border color */
+  --paper: #ffffff;         /* Background color */
+
+  /* ===== TYPOGRAPHY ===== */
+  --font-body: Georgia, 'Times New Roman', serif;
+  --font-heading: system-ui, -apple-system, sans-serif;
+  --font-mono: 'Courier New', Courier, monospace;
+
+  --font-size-base: 18px;
+  --font-size-h1: 2.5em;
+  --font-size-h2: 1.8em;
+  --font-size-h3: 1.4em;
+  --font-size-code: 0.9em;
+
+  --line-height: 1.6;
+  --line-height-heading: 1.2;
+
+  /* ===== SPACING ===== */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+
+  --max-width: 700px;
+  --content-padding: var(--spacing-lg);
+
+  /* ===== BORDERS ===== */
+  --border-thin: 1px;
+  --border-medium: 2px;
+  --border-thick: 4px;
+  --border-heavy: 6px;
+
+  /* ===== ELEMENT-SPECIFIC ===== */
+  --blockquote-border: var(--border-thick);
+  --blockquote-padding: var(--spacing-md);
+
+  --code-bg: var(--ink);
+  --code-fg: var(--paper);
+  --code-padding: var(--spacing-xs) var(--spacing-sm);
+
+  --table-border: var(--border-medium);
+  --table-padding: var(--spacing-sm);
+
+  --hr-style: var(--border-medium) solid var(--ink);
+}

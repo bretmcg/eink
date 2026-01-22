@@ -1,0 +1,133 @@
+/* THEME: THE PAPER TABLET (E-INK) */
+
+@scope (article) {
+  :scope {
+    /* E-Ink Palette: Grayscale perfection */
+    --paper-white: #fdfdfd; 
+    --ink-black: #1a1a1a;
+    --ink-gray: #555555;
+    --ink-light-gray: #e0e0e0;
+    
+    /* Elegant Book Typography */
+    --font-serif: "Charter", "Bitstream Charter", "Sitka Text", Cambria, serif;
+    --font-sans: "Inter", -apple-system, sans-serif;
+    
+    background-color: var(--paper-white);
+    color: var(--ink-black);
+    font-family: var(--font-serif);
+    
+    /* Golden Ratio spacing for that "tablet" feel */
+    line-height: 1.618; 
+    padding: 10% 12%; /* Generous margins make it look like an object */
+    max-width: 900px;
+    margin: 0 auto;
+    
+    /* Subtitle rendering for e-ink */
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* 1. TYPOGRAPHY: Scale over Boldness */
+  h1, h2, h3 {
+    font-family: var(--font-serif);
+    font-weight: 300; /* Light weights look premium on e-ink */
+    letter-spacing: -0.02em;
+    color: var(--ink-black);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-size: 3.5rem;
+    border-bottom: 0.5px solid var(--ink-light-gray);
+    padding-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    font-variant: small-caps; /* Adds "Art Book" sophistication */
+    letter-spacing: 0.05em;
+  }
+
+  /* 2. BODY TEXT: The Reading Experience */
+  p {
+    margin-bottom: 1.618rem;
+    font-size: 1.15rem;
+    hyphens: auto; /* Clean edges on the tablet screen */
+  }
+
+  /* Subtle indentation instead of paragraph spacing for a classic book look */
+  p + p {
+    text-indent: 1.5rem;
+    margin-top: -1.618rem;
+  }
+
+  /* 3. BLOCKQUOTES: Philosophical Weight */
+  blockquote {
+    margin: 3rem 0;
+    padding-left: 2rem;
+    border-left: 1px solid var(--ink-black);
+    font-style: italic;
+    color: var(--ink-gray);
+    font-size: 1.25rem;
+  }
+
+  /* 4. LISTS: Minimalist Markers */
+  ul, ol {
+    margin: 2rem 0;
+    padding-left: 1rem;
+  }
+
+  li {
+    margin-bottom: 0.5rem;
+    color: var(--ink-black);
+  }
+
+  /* Custom "Dash" list markers */
+  ul li::marker {
+    content: "—  ";
+    color: var(--ink-gray);
+  }
+
+  /* 5. CODE: The Typewriter Insert */
+  pre, code {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 0.95rem;
+    background: transparent;
+  }
+
+  pre {
+    border: 1px solid var(--ink-light-gray);
+    padding: 1.5rem;
+    border-radius: 4px;
+    color: var(--ink-gray);
+  }
+
+  /* 6. HR: The Elegant Break */
+  hr {
+    border: none;
+    border-top: 1px solid var(--ink-light-gray);
+    margin: 4rem 0;
+    text-align: center;
+  }
+  
+  /* Add a "Flourish" to HR tags */
+  hr::after {
+    content: "❦"; /* Floral heart/Aldus Leaf */
+    display: inline-block;
+    position: relative;
+    top: -0.7rem;
+    padding: 0 1rem;
+    background: var(--paper-white);
+    color: var(--ink-light-gray);
+  }
+
+  /* 7. IMAGES: Charcoal Sketches */
+  img {
+    max-width: 100%;
+    filter: grayscale(100%) contrast(110%);
+    mix-blend-mode: multiply; /* Helps it sit "into" the paper */
+    margin: 3rem 0;
+  }
+}

@@ -1,0 +1,97 @@
+/* Mod - Bold modernist typography, full width */
+
+/* Variable overrides */
+:root {
+  --font-body: Helvetica, Arial, sans-serif;
+  --font-heading: Helvetica, Arial, sans-serif;
+  --font-mono: "SF Mono", Monaco, "Courier New", monospace;
+
+  --font-size-base: 18px;
+  --font-size-h1: 5rem;
+  --font-size-h2: 2.5rem;
+  --font-size-h3: 1.4rem;
+
+  --line-height: 1.5;
+  --max-width: 100%;
+  --content-padding: 40px 60px;
+
+  --border-thick: 8px;
+  --border-medium: 4px;
+}
+
+@scope (article) {
+  h1 {
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    line-height: 0.9;
+    margin-bottom: 1em;
+    border-bottom: var(--border-thick) solid var(--ink);
+    padding-bottom: 0.3em;
+  }
+
+  h2 {
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 2em;
+    border-bottom: var(--border-medium) solid var(--ink);
+  }
+
+  h3 {
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+
+  p {
+    font-size: 1.1rem;
+    max-width: 70ch;
+  }
+
+  blockquote {
+    font-size: 2rem;
+    font-weight: 700;
+    font-style: normal;
+    border-left: var(--border-thick) solid var(--ink);
+    padding-left: 30px;
+    margin: 2em 0;
+    max-width: 50ch;
+  }
+
+  blockquote p {
+    font-size: inherit;
+  }
+
+  ul, ol {
+    font-size: 1.1rem;
+  }
+
+  li {
+    margin: 0.8em 0;
+  }
+
+  hr {
+    border-top: var(--border-thick) solid var(--ink);
+    margin: 3em 0;
+  }
+
+  code {
+    font-weight: 700;
+  }
+
+  pre {
+    border: var(--border-medium) solid var(--ink);
+    padding: 2em;
+  }
+
+  table {
+    border: var(--border-medium) solid var(--ink);
+  }
+
+  th {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+}
