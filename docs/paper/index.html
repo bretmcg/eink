@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paper - Theme Picker</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --fg: #000000;
+        }
+        body {
+            background: var(--bg);
+            color: var(--fg);
+            font-family: monospace;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            margin: 0 0 20px 0;
+        }
+        .picker {
+            border: 4px solid var(--fg);
+            padding: 20px;
+            max-width: 400px;
+        }
+        label {
+            display: block;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+        select {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2rem;
+            font-family: monospace;
+            border: 4px solid var(--fg);
+            background: var(--bg);
+            color: var(--fg);
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        button {
+            width: 100%;
+            padding: 20px;
+            font-size: 1.5rem;
+            font-weight: 900;
+            font-family: monospace;
+            border: 4px solid var(--fg);
+            background: var(--bg);
+            color: var(--fg);
+            cursor: pointer;
+        }
+        button:active {
+            background: var(--fg);
+            color: var(--bg);
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 15px;
+            color: var(--fg);
+            font-weight: 900;
+        }
+
+        /* Fullscreen reader */
+        #reader {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: var(--bg);
+            overflow: auto;
+            z-index: 9999;
+        }
+        #reader.active {
+            display: block;
+        }
+        #reader-content {
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        #close-btn {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--fg);
+            background: var(--bg);
+            color: var(--fg);
+            font-size: 24px;
+            font-weight: 900;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            padding: 0;
+            line-height: 1;
+        }
+        #close-btn:active {
+            background: var(--fg);
+            color: var(--bg);
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-link">&larr; Back</a>
+
+    <div class="picker">
+        <h1>Paper</h1>
+        <label for="theme-select">Select Theme:</label>
+        <select id="theme-select">
+            <option value="themes/classic.css">Classic</option>
+            <option value="themes/typewriter.css">Typewriter</option>
+            <option value="themes/serif.css">Serif</option>
+            <option value="themes/compact.css">Compact</option>
+            <option value="themes/large.css">Large Print</option>
+        </select>
+        <button id="open-btn">Open</button>
+    </div>
+
+    <div id="reader">
+        <button id="close-btn">&times;</button>
+        <link id="base-css" rel="stylesheet" href="">
+        <link id="theme-css" rel="stylesheet" href="">
+        <div id="reader-content"></div>
+    </div>
+
+    <script>
+        const themeSelect = document.getElementById('theme-select');
+        const openBtn = document.getElementById('open-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const reader = document.getElementById('reader');
+        const readerContent = document.getElementById('reader-content');
+        const baseCss = document.getElementById('base-css');
+        const themeCss = document.getElementById('theme-css');
+
+        openBtn.addEventListener('click', async () => {
+            try {
+                // Load markdown
+                const response = await fetch('document.md');
+                const markdown = await response.text();
+
+                // Render markdown
+                readerContent.innerHTML = marked.parse(markdown);
+
+                // Apply stylesheets
+                baseCss.href = 'eink.css';
+                themeCss.href = themeSelect.value;
+
+                // Go fullscreen
+                reader.classList.add('active');
+                document.body.style.overflow = 'hidden';
+
+                // Try native fullscreen API
+                if (reader.requestFullscreen) {
+                    reader.requestFullscreen().catch(() => {});
+                } else if (reader.webkitRequestFullscreen) {
+                    reader.webkitRequestFullscreen();
+                }
+            } catch (err) {
+                alert('Error loading document: ' + err.message);
+            }
+        });
+
+        closeBtn.addEventListener('click', () => {
+            reader.classList.remove('active');
+            document.body.style.overflow = '';
+
+            // Exit native fullscreen if active
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            } else if (document.webkitFullscreenElement) {
+                document.webkitExitFullscreen();
+            }
+        });
+
+        // Also close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && reader.classList.contains('active')) {
+                closeBtn.click();
+            }
+        });
+    </script>
+</body>
+</html>

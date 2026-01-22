@@ -1,0 +1,23 @@
+/* Typewriter - Monospace with vintage feel */
+
+#reader-content {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 16px;
+    max-width: 650px;
+    letter-spacing: 0.02em;
+}
+
+#reader-content h1,
+#reader-content h2,
+#reader-content h3 {
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+#reader-content p {
+    text-indent: 2em;
+}
+
+#reader-content p:first-of-type {
+    text-indent: 0;
+}

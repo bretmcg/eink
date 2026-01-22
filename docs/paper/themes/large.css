@@ -1,0 +1,26 @@
+/* Large Print - Accessibility focused */
+
+#reader-content {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 28px;
+    max-width: 600px;
+    line-height: 1.8;
+    letter-spacing: 0.01em;
+    word-spacing: 0.1em;
+}
+
+#reader-content h1 {
+    font-size: 2.2em;
+}
+
+#reader-content h2 {
+    font-size: 1.6em;
+}
+
+#reader-content code {
+    font-size: 0.85em;
+}
+
+#reader-content li {
+    margin: 0.8em 0;
+}
