@@ -32,3 +32,32 @@
     font-style: italic;
 }
 
+/* Callout Containers */
+.callout {
+    padding: 16px;
+    margin: 1em 0;
+    border-radius: 4px;
+    border-left: 4px solid var(--text-normal); /* Default border */
+    background-color: rgba(0, 0, 0, 0.05); /* Light grey background */
+}
+
+.callout-title {
+    font-weight: bold;
+    font-family: sans-serif;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+    font-size: 0.85em;
+    letter-spacing: 0.05em;
+}
+
+/* Specific Types (Color overrides) */
+.callout[data-type="info"] { border-left-color: #555; }
+.callout[data-type="tip"] { border-left-color: #444; }
+.callout[data-type="warning"] { border-left-color: #000; border-left-style: double; }
+.callout[data-type="danger"] { border-left-color: #000; border-width: 6px; }
+
+/* On E-Ink, we avoid colors like Red/Blue and use borders/shades instead */
+
