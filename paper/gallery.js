@@ -272,7 +272,8 @@ document.addEventListener('keydown', (e) => {
 // Load configuration and initialize
 Promise.all([
     fetch('documents.json').then(r => r.json()),
-    fetch('themes.json').then(r => r.json())
+    fetch('themes.json').then(r => r.json()),
+    CardDesign.init('default')
 ]).then(([docs, themes]) => {
     DOCUMENTS = docs;
     THEMES = themes;

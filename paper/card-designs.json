@@ -1,0 +1,46 @@
+{
+  "default": {
+    "name": "Tarot",
+    "description": "Playing card / tarot card style with ornate borders",
+    "borderRadius": "12px",
+    "borderWidth": "2px",
+    "innerBorderOffset": "12px",
+    "cornerDotSize": "2px",
+    "aspectRatio": "2.5/4",
+    "outerShadowWidth": "6px",
+    "innerShadowWidth": "8px"
+  },
+  "minimal": {
+    "name": "Minimal",
+    "description": "Clean simple rectangle",
+    "borderRadius": "4px",
+    "borderWidth": "2px",
+    "innerBorderOffset": "0",
+    "cornerDotSize": "0",
+    "aspectRatio": "2.5/4",
+    "outerShadowWidth": "0",
+    "innerShadowWidth": "0"
+  },
+  "rounded": {
+    "name": "Rounded",
+    "description": "Soft rounded corners, no ornaments",
+    "borderRadius": "20px",
+    "borderWidth": "3px",
+    "innerBorderOffset": "0",
+    "cornerDotSize": "0",
+    "aspectRatio": "2.5/4",
+    "outerShadowWidth": "0",
+    "innerShadowWidth": "0"
+  },
+  "thick": {
+    "name": "Thick Frame",
+    "description": "Bold heavy border",
+    "borderRadius": "8px",
+    "borderWidth": "6px",
+    "innerBorderOffset": "10px",
+    "cornerDotSize": "3px",
+    "aspectRatio": "2.5/4",
+    "outerShadowWidth": "4px",
+    "innerShadowWidth": "6px"
+  }
+}

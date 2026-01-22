@@ -2,29 +2,46 @@
 // CARD DESIGN MODULE
 // ===========================================
 // Encapsulates the visual design of document cards.
-// Future: add interactivity, animations, variants, etc.
+// Loads design presets from card-designs.json
 
 const CardDesign = {
-    // Design configuration - tweak these values
-    config: {
-        borderRadius: '12px',
-        borderWidth: '2px',
-        innerBorderOffset: '12px',
-        cornerDotSize: '2px',
-        aspectRatio: '2.5/4',
+    // Current design config (loaded from JSON)
+    config: null,
+
+    // All available designs
+    designs: null,
+
+    // Load designs from JSON and initialize
+    async init(designName = 'default') {
+        const response = await fetch('card-designs.json');
+        this.designs = await response.json();
+        this.applyDesign(designName);
     },
 
-    // Inject card styles into the document
+    // Apply a design by name
+    applyDesign(designName) {
+        this.config = this.designs[designName] || this.designs['default'];
+        this.injectStyles();
+    },
+
+    // Inject/update card styles in the document
     injectStyles() {
-        const style = document.createElement('style');
-        style.id = 'card-design-styles';
+        let style = document.getElementById('card-design-styles');
+        if (!style) {
+            style = document.createElement('style');
+            style.id = 'card-design-styles';
+            document.head.appendChild(style);
+        }
         style.textContent = this.getCSS();
-        document.head.appendChild(style);
     },
 
     // Generate the CSS for cards
     getCSS() {
         const c = this.config;
+        const hasInnerBorder = c.innerBorderOffset !== '0';
+        const hasCornerDots = c.cornerDotSize !== '0';
+        const hasShadow = c.outerShadowWidth !== '0';
+
         return `
             .tile-card {
                 position: relative;
@@ -34,10 +51,10 @@ const CardDesign = {
                 border-radius: ${c.borderRadius};
                 border: ${c.borderWidth} solid var(--fg);
                 overflow: hidden;
-                box-shadow: inset 0 0 0 6px var(--bg), inset 0 0 0 8px var(--fg);
+                ${hasShadow ? `box-shadow: inset 0 0 0 ${c.outerShadowWidth} var(--bg), inset 0 0 0 ${c.innerShadowWidth} var(--fg);` : ''}
             }
 
-            /* Inner frame border */
+            ${hasInnerBorder ? `
             .tile-card::before {
                 content: '';
                 position: absolute;
@@ -50,8 +67,9 @@ const CardDesign = {
                 pointer-events: none;
                 z-index: 5;
             }
+            ` : ''}
 
-            /* Corner ornaments */
+            ${hasCornerDots ? `
             .tile-card::after {
                 content: '';
                 position: absolute;
@@ -67,10 +85,11 @@ const CardDesign = {
                 pointer-events: none;
                 z-index: 5;
             }
+            ` : ''}
 
             .tile:hover .tile-card {
                 border-color: #666;
-                box-shadow: inset 0 0 0 6px var(--bg), inset 0 0 0 8px #666;
+                ${hasShadow ? `box-shadow: inset 0 0 0 ${c.outerShadowWidth} var(--bg), inset 0 0 0 ${c.innerShadowWidth} #666;` : ''}
             }
 
             .tile-card iframe {
@@ -87,7 +106,7 @@ const CardDesign = {
         `;
     },
 
-    // Create a card element (for future dynamic card creation)
+    // Create a card element
     createElement() {
         const card = document.createElement('div');
         card.className = 'tile-card';
@@ -95,7 +114,6 @@ const CardDesign = {
     },
 
     // Hook for future interactivity
-    // e.g., flip animation, glow effect, shake, etc.
     animate(cardElement, animation) {
         switch (animation) {
             case 'pulse':
@@ -106,30 +124,11 @@ const CardDesign = {
                 cardElement.style.animation = 'card-shake 0.3s ease';
                 setTimeout(() => cardElement.style.animation = '', 300);
                 break;
-            // Add more animations as needed
         }
     },
 
-    // Future: different card variants/themes
-    variants: {
-        default: {},
-        ornate: {
-            // More decorative borders, etc.
-        },
-        minimal: {
-            // Simple clean look
-        },
-        tarot: {
-            // Full tarot card styling
-        }
-    },
-
-    // Apply a variant to a card
-    applyVariant(cardElement, variantName) {
-        // Future implementation
-        cardElement.dataset.variant = variantName;
+    // Get list of available design names
+    getDesignNames() {
+        return Object.keys(this.designs || {});
     }
 };
-
-// Auto-inject styles when script loads
-CardDesign.injectStyles();
