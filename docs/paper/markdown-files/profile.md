@@ -112,22 +112,21 @@ Behavior: Purchasing tickets to Miami Hurricanes games weeks in advance.
 
 Mood: Highly volatile, dependent on Saturday outcomes.
 
-05. THE DIETARY CONSTRAINTS (CRITICAL WARNING)
-This section is marked Red Alert.
+05. THE HERBICIDAL IMPERATIVE (LEVEL 5 ALERT)
+The true adversary is Coriandrum sativum—known to the common man as Cilantro.
 
-If you are hosting Bret McGowen for a meal, you must understand the Onion Exclusion Principle. This is not a preference. It is a biological imperative.
+To Bret, cilantro isn't an ingredient; it’s a system-level corruption. One stray leaf can compromise the entire integrity of a Thai curry or a street taco.
 
-Italian Sandwich? "No Onions."
+The Soap Protocol: If a dish is garnished with the "Green Menace," the meal is considered compromised.
 
-Pizza? "No Red Onions."
+The Verification Step: "Is there cilantro in this?" is the most critical query in Bret’s dining-out API.
 
-Thai Curry? "Check the paste."
+The Correction: Garlic? Welcome. Cilantro? ACCESS DENIED.
 
-The Onion Incident (Redacted) We do not speak of the salad of 2021. We only remember the lesson: Verify the ingredients.
+"I can debug a legacy codebase in an afternoon, but I cannot debug a salsa that has been tainted by cilantro." — Bret, probably.
 
-But outside of the Allium family, the palate is adventurous. Thai, Indian, Japanese—he dines with the frequency of a food critic and the enthusiasm of a hobbit. The Venmo logs tell a story of shared plates, split checks, and the communal joy of breaking bread (onion-free bread) with friends.
 
-06. SYSTEM STATUS: EVOLVING
+1.  SYSTEM STATUS: EVOLVING
 As of June 2025, Bret has re-initialized in a new sector of New York City. The apartment hunt was executed with the same precision as a software migration—leases broken, new contracts signed, logistics managed by Bettina Equities.
 
 He is currently running Version 4.3 of his life:
