@@ -1,0 +1,34 @@
+/* zen-mode.css */
+
+/* 1. Define Obsidian's variables so the HTML file knows what they are. 
+   Obsidian defines these natively, but your HTML file needs them manually. */
+:root {
+    --text-normal: #000000;
+    --background-primary: #ffffff;
+    --font-text: 'Georgia', serif;
+    --h1-color: #222222;
+}
+
+/* 2. Target the class we added. 
+   This works in Obsidian (natively) and your HTML (because of the wrapper). */
+.markdown-preview-view {
+    font-family: var(--font-text);
+    color: var(--text-normal);
+    background-color: var(--background-primary);
+    line-height: 1.6;
+    padding: 40px !important; /* Force padding for the Zen look */
+}
+
+/* 3. Style Elements */
+.markdown-rendered h1 {
+    color: var(--h1-color);
+    font-weight: 900;
+    border-bottom: none; /* Override default Obsidian underline */
+}
+
+.markdown-rendered blockquote {
+    border-left: 4px solid var(--text-normal);
+    color: #555;
+    font-style: italic;
+}
+
