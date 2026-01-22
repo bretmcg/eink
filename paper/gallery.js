@@ -41,9 +41,8 @@ function createGallery() {
         tile.dataset.currentTheme = startTheme.file;
         tile.dataset.themeIndex = startThemeIndex;
 
-        // Card frame
-        const card = document.createElement('div');
-        card.className = 'tile-card';
+        // Card frame (from card-design.js)
+        const card = CardDesign.createElement();
 
         const iframe = document.createElement('iframe');
         iframe.src = `preview.html?doc=${encodeURIComponent(doc.file)}&theme=${encodeURIComponent(startTheme.file)}`;
