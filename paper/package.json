@@ -1,12 +1,12 @@
 {
   "name": "paper",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite"
   },
-  "keywords": [],
-  "author": "Bret McGowen",
-  "license": "ISC"
+  "devDependencies": {
+    "vite": "^6.0.0"
+  },
+  "author": "Bret McGowen"
 }
