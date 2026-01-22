@@ -1,18 +1,18 @@
 import { defineConfig } from 'vite'
 
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react' 
-
 export default defineConfig({
-  plugins: [react()],
   server: {
     allowedHosts: [
-      '3029bbbbf472.ngrok-free.app' // Add your specific ngrok host here
+      '3029bbbbf472.ngrok-free.app',
+      '774d77f9858c.ngrok-free.app'
     ]
   }
 })
 
+
 /*
+
+
 export default defineConfig({
   server: {
     host: true, // This allows the network URL (192.168.x.x)
