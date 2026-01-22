@@ -1,1 +1,1 @@
-# eink-test
+# eink

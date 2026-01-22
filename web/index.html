@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,10 +53,45 @@
         }
 
         /* PDF Viewport (Uses native Android viewer) */
-        #pdf-viewer { 
-            width: 100%; 
-            height: 60vh; 
-            border: 4px solid var(--fg); 
+        #pdf-viewer {
+            width: 100%;
+            height: 60vh;
+            border: 4px solid var(--fg);
+        }
+
+        /* Stylus Drawing Canvas */
+        #draw-canvas {
+            width: 100%;
+            height: 300px;
+            border: 2px solid var(--fg);
+            touch-action: none; /* Prevent scrolling while drawing */
+            cursor: crosshair;
+        }
+        #draw-stats {
+            margin-top: 10px;
+            font-size: 1rem;
+        }
+
+        /* Tap Latency Test */
+        #tap-target {
+            width: 100%;
+            height: 150px;
+            border: 4px solid var(--fg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 900;
+            user-select: none;
+            cursor: pointer;
+        }
+        #tap-target.tapped {
+            background: var(--fg);
+            color: var(--bg);
+        }
+        #latency-results {
+            margin-top: 10px;
+            font-size: 1rem;
         }
     </style>
 </head>
@@ -70,6 +104,32 @@
             <button onclick="invert()">Invert UI</button>
         </div>
         <p id="fps">FPS: 0</p>
+    </div>
+
+    <div class="panel">
+        <h2>Stylus Drawing Test</h2>
+        <canvas id="draw-canvas"></canvas>
+        <div style="margin-top:10px;">
+            <button onclick="clearCanvas()">Clear</button>
+            <button onclick="togglePressure()">Pressure: ON</button>
+        </div>
+        <div id="draw-stats">
+            Points/sec: <span id="pps">0</span> |
+            Pressure: <span id="pressure">N/A</span> |
+            Total points: <span id="total-points">0</span>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h2>Tap Latency Test</h2>
+        <div id="tap-target">TAP HERE</div>
+        <div id="latency-results">
+            Last: <span id="last-latency">--</span>ms |
+            Avg: <span id="avg-latency">--</span>ms |
+            Min: <span id="min-latency">--</span>ms |
+            Taps: <span id="tap-count">0</span>
+        </div>
+        <button onclick="resetLatency()" style="margin-top:10px;">Reset Stats</button>
     </div>
 
     <div class="panel">
@@ -121,6 +181,124 @@
                 root.style.setProperty('--bg', '#ffffff');
                 root.style.setProperty('--fg', '#000000');
             }
+        }
+
+        // ========== STYLUS DRAWING TEST ==========
+        const canvas = document.getElementById('draw-canvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+        let usePressure = true;
+        let pointCount = 0;
+        let totalPoints = 0;
+        let lastPointTime = performance.now();
+        let pointsThisSecond = 0;
+
+        // Set canvas size to match display size
+        function resizeCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        canvas.addEventListener('pointerdown', (e) => {
+            isDrawing = true;
+            ctx.beginPath();
+            ctx.moveTo(e.offsetX, e.offsetY);
+            e.preventDefault();
+        });
+
+        canvas.addEventListener('pointermove', (e) => {
+            if (!isDrawing) return;
+
+            // Track points per second
+            pointsThisSecond++;
+            totalPoints++;
+            const now = performance.now();
+            if (now - lastPointTime >= 1000) {
+                document.getElementById('pps').textContent = pointsThisSecond;
+                pointsThisSecond = 0;
+                lastPointTime = now;
+            }
+            document.getElementById('total-points').textContent = totalPoints;
+
+            // Pressure support (stylus)
+            const pressure = e.pressure || 0.5;
+            document.getElementById('pressure').textContent = pressure.toFixed(2);
+
+            // Line width based on pressure
+            const baseWidth = 3;
+            ctx.lineWidth = usePressure ? baseWidth + (pressure * 8) : baseWidth;
+
+            // Use current foreground color
+            const fg = getComputedStyle(document.documentElement).getPropertyValue('--fg').trim();
+            ctx.strokeStyle = fg;
+
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(e.offsetX, e.offsetY);
+
+            e.preventDefault();
+        });
+
+        canvas.addEventListener('pointerup', () => { isDrawing = false; });
+        canvas.addEventListener('pointerleave', () => { isDrawing = false; });
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            totalPoints = 0;
+            document.getElementById('total-points').textContent = 0;
+        }
+
+        function togglePressure() {
+            usePressure = !usePressure;
+            event.target.textContent = `Pressure: ${usePressure ? 'ON' : 'OFF'}`;
+        }
+
+        // ========== TAP LATENCY TEST ==========
+        const tapTarget = document.getElementById('tap-target');
+        let tapStartTime = 0;
+        let latencies = [];
+
+        tapTarget.addEventListener('pointerdown', (e) => {
+            tapStartTime = performance.now();
+
+            // Visual feedback as fast as possible
+            tapTarget.classList.add('tapped');
+            tapTarget.textContent = 'TAPPED!';
+
+            // Measure latency (time from event to now, essentially 0,
+            // but the real latency is perceived by the user on e-ink)
+            const latency = performance.now() - tapStartTime;
+            latencies.push(latency);
+
+            document.getElementById('last-latency').textContent = latency.toFixed(1);
+            document.getElementById('tap-count').textContent = latencies.length;
+
+            const avg = latencies.reduce((a, b) => a + b, 0) / latencies.length;
+            document.getElementById('avg-latency').textContent = avg.toFixed(1);
+
+            const min = Math.min(...latencies);
+            document.getElementById('min-latency').textContent = min.toFixed(1);
+
+            e.preventDefault();
+        });
+
+        tapTarget.addEventListener('pointerup', () => {
+            tapTarget.classList.remove('tapped');
+            tapTarget.textContent = 'TAP HERE';
+        });
+
+        function resetLatency() {
+            latencies = [];
+            document.getElementById('last-latency').textContent = '--';
+            document.getElementById('avg-latency').textContent = '--';
+            document.getElementById('min-latency').textContent = '--';
+            document.getElementById('tap-count').textContent = '0';
         }
     </script>
 </body>
