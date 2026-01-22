@@ -1,4 +1,26 @@
 {
+  "jack-of-diamonds": {
+    "name": "Jack of Diamonds",
+    "description": "Playing card style with J♦ corner pips",
+    "borderRadius": "12px",
+    "borderWidth": "2px",
+    "innerBorderOffset": "12px",
+    "cornerDotSize": "0",
+    "aspectRatio": "2.5/4",
+    "outerShadowWidth": "6px",
+    "innerShadowWidth": "8px",
+    "borderColors": {
+      "top": "var(--fg)",
+      "right": "var(--fg)",
+      "bottom": "#fff",
+      "left": "#fff"
+    },
+    "cornerPip": {
+      "symbol": "♦",
+      "letter": "J",
+      "color": "var(--fg)"
+    }
+  },
   "default": {
     "name": "Tarot",
     "description": "Playing card / tarot card style with ornate borders",

@@ -110,8 +110,8 @@ function patternRandom(tiles) {
     function pop() {
         const randomTile = tiles[Math.floor(Math.random() * tiles.length)];
         cycleTheme(randomTile);
-        // Random delay between 0.5-2 seconds for next pop
-        const nextDelay = 500 + Math.random() * 1500;
+        // Random delay between 1.5-4.5 seconds for next pop
+        const nextDelay = 1500 + Math.random() * 3000;
         setTimeout(pop, nextDelay);
     }
     pop();
@@ -273,7 +273,7 @@ document.addEventListener('keydown', (e) => {
 Promise.all([
     fetch('documents.json').then(r => r.json()),
     fetch('themes.json').then(r => r.json()),
-    CardDesign.init('default')
+    CardDesign.init('jack-of-diamonds')
 ]).then(([docs, themes]) => {
     DOCUMENTS = docs;
     THEMES = themes;

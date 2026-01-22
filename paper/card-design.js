@@ -41,6 +41,8 @@ const CardDesign = {
         const hasInnerBorder = c.innerBorderOffset !== '0';
         const hasCornerDots = c.cornerDotSize !== '0';
         const hasShadow = c.outerShadowWidth !== '0';
+        const hasCornerPip = c.cornerPip;
+        const hasBorderColors = c.borderColors;
 
         return `
             .tile-card {
@@ -49,7 +51,14 @@ const CardDesign = {
                 aspect-ratio: ${c.aspectRatio};
                 background: var(--bg);
                 border-radius: ${c.borderRadius};
-                border: ${c.borderWidth} solid var(--fg);
+                ${hasBorderColors ? `
+                border-width: ${c.borderWidth};
+                border-style: solid;
+                border-top-color: ${c.borderColors.top};
+                border-right-color: ${c.borderColors.right};
+                border-bottom-color: ${c.borderColors.bottom};
+                border-left-color: ${c.borderColors.left};
+                ` : `border: ${c.borderWidth} solid var(--fg);`}
                 overflow: hidden;
                 ${hasShadow ? `box-shadow: inset 0 0 0 ${c.outerShadowWidth} var(--bg), inset 0 0 0 ${c.innerShadowWidth} var(--fg);` : ''}
             }
@@ -87,6 +96,38 @@ const CardDesign = {
             }
             ` : ''}
 
+            ${hasCornerPip ? `
+            /* Top-left corner pip */
+            .tile-card .corner-pip {
+                position: absolute;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                font-family: Georgia, serif;
+                color: ${c.cornerPip.color};
+                z-index: 6;
+                pointer-events: none;
+                line-height: 1;
+            }
+            .tile-card .corner-pip-tl {
+                top: 8px;
+                left: 10px;
+            }
+            .tile-card .corner-pip-br {
+                bottom: 8px;
+                right: 10px;
+                transform: rotate(180deg);
+            }
+            .tile-card .corner-pip .letter {
+                font-size: 14px;
+                font-weight: bold;
+            }
+            .tile-card .corner-pip .symbol {
+                font-size: 12px;
+                margin-top: -2px;
+            }
+            ` : ''}
+
             .tile:hover .tile-card {
                 border-color: #666;
                 ${hasShadow ? `box-shadow: inset 0 0 0 ${c.outerShadowWidth} var(--bg), inset 0 0 0 ${c.innerShadowWidth} #666;` : ''}
@@ -110,6 +151,24 @@ const CardDesign = {
     createElement() {
         const card = document.createElement('div');
         card.className = 'tile-card';
+
+        // Add corner pips if design has them
+        if (this.config.cornerPip) {
+            const pip = this.config.cornerPip;
+
+            // Top-left pip
+            const tlPip = document.createElement('div');
+            tlPip.className = 'corner-pip corner-pip-tl';
+            tlPip.innerHTML = `<span class="letter">${pip.letter}</span><span class="symbol">${pip.symbol}</span>`;
+            card.appendChild(tlPip);
+
+            // Bottom-right pip (rotated)
+            const brPip = document.createElement('div');
+            brPip.className = 'corner-pip corner-pip-br';
+            brPip.innerHTML = `<span class="letter">${pip.letter}</span><span class="symbol">${pip.symbol}</span>`;
+            card.appendChild(brPip);
+        }
+
         return card;
     },
 
