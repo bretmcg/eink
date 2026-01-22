@@ -1,0 +1,64 @@
+/* NEW YORKER EDITORIAL THEME */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap');
+
+body {
+    background-color: #ffffff;
+    color: #000000;
+    font-family: 'Lora', serif;
+    font-size: 21px; /* Slightly larger for that "premium" feel */
+    line-height: 1.6;
+    /* Asymmetric margin: creates space for the thumb while holding the tablet */
+    padding: 10% 15% 10% 10%; 
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* The "Section" Header */
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+    text-align: left;
+    letter-spacing: -1px;
+    border: none; /* Remove the standard line for a cleaner look */
+}
+
+/* The Subtitle / Date Meta-data */
+h1 + p {
+    font-family: system-ui, sans-serif;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+    display: block;
+}
+
+/* The Editorial Drop Cap */
+p:first-of-type::first-letter {
+    float: left;
+    font-family: 'Playfair Display', serif;
+    font-size: 5.5rem;
+    line-height: 0.85;
+    padding-top: 4px;
+    padding-right: 12px;
+    padding-left: 3px;
+}
+
+/* Pull Quotes (The "Marked 2" Secret Sauce) */
+.pull-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-style: italic;
+    width: 130%; /* Break the margin for visual interest */
+    margin-left: -15%;
+    text-align: center;
+    padding: 40px 0;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+}
+
