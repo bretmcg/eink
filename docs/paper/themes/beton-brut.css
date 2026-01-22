@@ -1,28 +1,33 @@
-/* BÉTON BRUT: Brutalist/Bauhaus E-Ink Theme */
+/* BETON BRUT: Brutalist/Bauhaus E-Ink Theme */
 
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;900&family=JetBrains+Mono&display=swap');
 
+/* Variable overrides */
 :root {
-    --ink: #000000;
-    --paper: #FFFFFF;
-    --border-width: 4px; /* Heavy, industrial lines */
+  --font-body: 'Inter', sans-serif;
+  --font-heading: 'Anton', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --font-size-base: 1.2rem;
+  --font-size-h1: 22vw;
+  --font-size-h2: 3rem;
+
+  --line-height: 1.4;
+  --max-width: none;
+  --content-padding: 0;
+
+  --border-thick: 4px;
 }
 
-body {
-    background-color: var(--paper);
-    color: var(--ink);
-    font-family: 'Inter', sans-serif;
-    line-height: 1.4;
+@scope (article) {
+  :scope {
     padding: 0;
     margin: 0;
-}
+  }
 
-/* THE MONOLITHIC HEADER
-   Uses "vw" units so the text is literally as wide as the screen. 
-*/
-h1 {
-    font-family: 'Anton', sans-serif;
-    font-size: 22vw; 
+  /* THE MONOLITHIC HEADER */
+  h1 {
+    font-family: var(--font-heading);
     text-transform: uppercase;
     line-height: 0.8;
     margin: 0;
@@ -30,88 +35,76 @@ h1 {
     background-color: var(--ink);
     color: var(--paper);
     word-wrap: break-word;
-}
+    border-bottom: none;
+  }
 
-/* SECTION HEADERS 
-   Bauhaus-style geometric alignment.
-*/
-h2 {
+  /* SECTION HEADERS - Bauhaus-style geometric alignment */
+  h2 {
     font-weight: 900;
-    font-size: 3rem;
-    border-top: var(--border-width) solid var(--ink);
-    border-bottom: var(--border-width) solid var(--ink);
+    border-top: var(--border-thick) solid var(--ink);
+    border-bottom: var(--border-thick) solid var(--ink);
     padding: 10px 20px;
     margin: 60px 0 20px 0;
-}
+  }
 
-/* THE GRID CONTENT
-   Brutalism loves exposed "infrastructure."
-*/
-p, ul, ol {
+  /* THE GRID CONTENT - Brutalism loves exposed "infrastructure" */
+  p, ul, ol {
     margin: 0;
     padding: 40px 20px;
-    font-size: 1.2rem;
     max-width: none;
-    border-bottom: 1px solid var(--ink); /* Exposed horizontal grid */
-}
+    border-bottom: 1px solid var(--ink);
+  }
 
-/* CODE / DATA
-   Treating code like an architectural label.
-*/
-code {
-    font-family: 'JetBrains Mono', monospace;
-    background: var(--ink);
-    color: var(--paper);
-    padding: 2px 8px;
+  /* CODE / DATA - Treating code like an architectural label */
+  code {
     font-weight: bold;
-}
+  }
 
-/* THE "BAUHAUS ACCENT"
-   Use this for specific callouts or blockquotes.
-*/
-blockquote {
+  /* THE "BAUHAUS ACCENT" - For specific callouts or blockquotes */
+  blockquote {
     margin: 0;
     padding: 60px 20px;
-    background-color: #eeeeee; /* Light gray for texture */
+    background-color: #eeeeee;
     font-weight: 900;
     font-size: 1.5rem;
     text-transform: uppercase;
-    border-right: 20px solid var(--ink); /* Heavy vertical bar */
-}
+    border-left: none;
+    border-right: 20px solid var(--ink);
+    font-style: normal;
+  }
 
-/* FOOTER / META
-   Tiny text, high-density info.
-*/
-footer {
-    font-family: 'JetBrains Mono', monospace;
+  /* FOOTER / META - Tiny text, high-density info */
+  footer {
+    font-family: var(--font-mono);
     font-size: 0.7rem;
     padding: 20px;
     text-transform: uppercase;
-}
+  }
 
-/* THE PUNK CORRECTION */
-.correction {
+  /* THE PUNK CORRECTION */
+  .correction {
     position: relative;
     text-decoration: none;
     font-weight: 900;
-}
+  }
 
-.correction::after {
+  .correction::after {
     content: "";
     position: absolute;
     left: 0;
     top: 50%;
     width: 100%;
     height: 0.3em;
-    background: var(--ink); /* Black marker line */
+    background: var(--ink);
     transform: rotate(-2deg);
     opacity: 0.8;
-}
+  }
 
-.true-fact {
+  .true-fact {
     background: var(--ink);
     color: var(--paper);
     padding: 0 5px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     text-transform: uppercase;
+  }
 }

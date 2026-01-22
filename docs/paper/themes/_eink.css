@@ -1,0 +1,38 @@
+/* =============================================
+   E-INK DEVICE OPTIMIZATIONS
+   =============================================
+   Automatically applied on:
+   - Monochrome displays
+   - Slow-refresh displays (e-ink)
+   ============================================= */
+
+@media (monochrome), (update: slow) {
+  @scope (article) {
+    /* Disable all transitions and animations */
+    *, *::before, *::after {
+      transition: none !important;
+      animation: none !important;
+    }
+
+    /* Images: force grayscale with high contrast */
+    img {
+      filter: grayscale(100%) contrast(1.2);
+    }
+
+    /* Links: no hover effects, just underline */
+    a {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* Avoid thin hairline borders that disappear on e-ink */
+    * {
+      border-width: 0;
+    }
+
+    /* When borders are used, make them solid and visible */
+    h1, h2, blockquote, pre, table, th, td {
+      border-style: solid;
+    }
+  }
+}

@@ -1,33 +1,34 @@
-/* MASKED FOCUS LAYER */
+/* Focus - Masked reading layer for concentration */
 
-/* This creates a giant "dark" overlay that dims the rest of the page */
-body::after {
+@scope (article) {
+  /* MASKED FOCUS LAYER */
+
+  /* This creates a giant "dark" overlay that dims the rest of the page */
+  :scope::after {
     content: "";
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    pointer-events: none; /* Allows you to scroll "through" the mask */
-    
-    /* The "Spotlight" - Adjust the 25% and 75% to change the focus window size */
+    pointer-events: none;
+
+    /* The "Spotlight" - Adjust percentages to change focus window size */
     background: linear-gradient(
-        to bottom,
-        rgba(0,0,0,1) 0%,
-        rgba(0,0,0,1) 35%,
-        rgba(0,0,0,0) 35%,
-        rgba(0,0,0,0) 65%,
-        rgba(0,0,0,1) 65%,
-        rgba(0,0,0,1) 100%
+      to bottom,
+      rgba(0,0,0,1) 0%,
+      rgba(0,0,0,1) 35%,
+      rgba(0,0,0,0) 35%,
+      rgba(0,0,0,0) 65%,
+      rgba(0,0,0,1) 65%,
+      rgba(0,0,0,1) 100%
     );
     z-index: 1000;
-}
+  }
 
-/* We invert the text color for the parts covered by the black bars 
-   so you can still see them faintly if you want, or keep them black 
-   for total focus. */
-h1, h2, p {
+  /* Keep text under the mask's blending mode if desired */
+  h1, h2, p {
     position: relative;
-    z-index: 1; /* Keep text under the mask's blending mode if desired */
+    z-index: 1;
+  }
 }
-

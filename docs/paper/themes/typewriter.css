@@ -1,23 +1,30 @@
 /* Typewriter - Monospace with vintage feel */
 
-#reader-content {
-    font-family: "Courier New", Courier, monospace;
-    font-size: 16px;
-    max-width: 650px;
-    letter-spacing: 0.02em;
+/* Variable overrides */
+:root {
+  --font-body: "Courier New", Courier, monospace;
+  --font-heading: "Courier New", Courier, monospace;
+  --font-mono: "Courier New", Courier, monospace;
+
+  --font-size-base: 16px;
+  --max-width: 650px;
 }
 
-#reader-content h1,
-#reader-content h2,
-#reader-content h3 {
+@scope (article) {
+  :scope {
+    letter-spacing: 0.02em;
+  }
+
+  h1, h2, h3 {
     letter-spacing: 0.1em;
     text-transform: uppercase;
-}
+  }
 
-#reader-content p {
+  p {
     text-indent: 2em;
-}
+  }
 
-#reader-content p:first-of-type {
+  p:first-of-type {
     text-indent: 0;
+  }
 }

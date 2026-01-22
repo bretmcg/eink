@@ -4,59 +4,62 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Rubik+Glitch&family=Oswald:wght@700&display=swap');
 
+/* Variable overrides */
 :root {
-    --ink: #000000;
-    --paper: #ffffff;
-    --tape-gray: #e0e0e0;
+  --font-body: 'Special Elite', 'Courier New', monospace;
+  --font-heading: 'Oswald', sans-serif;
+  --font-mono: 'Courier New', monospace;
+
+  --font-size-base: 18px;
+  --font-size-h1: 4rem;
+  --font-size-h2: 2.5rem;
+
+  --line-height: 1.5;
+  --max-width: 850px;
+  --content-padding: 40px;
+
+  --border-thick: 5px;
+  --border-medium: 4px;
+
+  --tape-gray: #e0e0e0;
 }
 
-body {
-    background-color: var(--paper);
-    color: var(--ink);
-    font-family: 'Special Elite', 'Courier New', monospace; /* Typewriter style */
-    font-size: 18px;
-    line-height: 1.5;
-    max-width: 850px;
-    margin: 0 auto;
-    padding: 40px;
+@scope (article) {
+  :scope {
     /* Simulate bad printing alignment */
-    transform: rotate(-0.2deg); 
-}
+    transform: rotate(-0.2deg);
+  }
 
-/* --- HEADERS: STAMPED & GRITTY --- */
-h1, h2, h3 {
-    font-family: 'Oswald', sans-serif;
+  /* --- HEADERS: STAMPED & GRITTY --- */
+  h1, h2, h3 {
     text-transform: uppercase;
-    color: var(--ink);
     line-height: 0.9;
-}
+  }
 
-h1 {
-    font-size: 4rem;
-    border: 5px solid var(--ink);
+  h1 {
+    border: var(--border-thick) solid var(--ink);
     padding: 10px;
     text-align: center;
-    transform: rotate(1deg); /* Slightly crooked */
+    transform: rotate(1deg);
     background: repeating-linear-gradient(
-        45deg,
-        var(--paper),
-        var(--paper) 10px,
-        var(--ink) 10px,
-        var(--ink) 12px
-    ); /* Striped background pattern */
+      45deg,
+      var(--paper),
+      var(--paper) 10px,
+      var(--ink) 10px,
+      var(--ink) 12px
+    );
     color: var(--paper);
     text-shadow: 2px 2px 0px var(--ink);
     -webkit-text-stroke: 1px var(--ink);
-}
+  }
 
-h2 {
-    font-size: 2.5rem;
-    border-bottom: 4px solid var(--ink);
+  h2 {
+    border-bottom: var(--border-medium) solid var(--ink);
     margin-top: 60px;
-}
+  }
 
-/* --- BLOCKQUOTES: THE "TAPED" LOOK --- */
-blockquote {
+  /* --- BLOCKQUOTES: THE "TAPED" LOOK --- */
+  blockquote {
     position: relative;
     background: var(--paper);
     border: 2px solid var(--ink);
@@ -65,90 +68,86 @@ blockquote {
     box-shadow: 5px 5px 0px var(--ink);
     font-style: italic;
     font-size: 1.2rem;
-}
-/* The "Tape" visual trick */
-blockquote::before {
+    border-left: 2px solid var(--ink);
+  }
+
+  /* The "Tape" visual trick */
+  blockquote::before {
     content: "";
     position: absolute;
     top: -10px;
     left: 45%;
     width: 60px;
     height: 20px;
-    background: rgba(0,0,0,0.1); /* Faint gray tape */
+    background: rgba(0,0,0,0.1);
     border: 1px solid var(--ink);
     transform: rotate(-2deg);
-}
+  }
 
-/* --- CODE BLOCKS: THE TERMINAL --- */
-pre {
-    background: var(--ink);
-    color: var(--paper);
-    padding: 15px;
-    overflow-x: auto;
-    border: 2px dashed var(--ink); /* Cut-out look */
-}
-code {
-    font-family: 'Courier New', monospace;
+  /* --- CODE BLOCKS: THE TERMINAL --- */
+  pre {
+    border: 2px dashed var(--ink);
+  }
+
+  code {
     font-weight: bold;
-}
-p code {
-    background: var(--ink);
-    color: var(--paper);
-    padding: 2px 6px;
-}
+  }
 
-/* --- TABLES: HALFTONE TEXTURE --- */
-table {
-    width: 100%;
-    border-collapse: collapse;
+  /* --- TABLES: HALFTONE TEXTURE --- */
+  table {
     margin: 30px 0;
     font-size: 0.9rem;
     border: 3px solid var(--ink);
-}
-th, td {
+  }
+
+  th, td {
     border: 1px solid var(--ink);
     padding: 10px;
-    text-align: left;
-}
-th {
-    background: var(--ink);
-    color: var(--paper);
-    text-transform: uppercase;
-}
-/* E-ink friendly striping using dots instead of gray color */
-tr:nth-child(even) {
-    background-image: radial-gradient(var(--ink) 15%, transparent 16%);
-    background-size: 4px 4px; /* Tiny dots pattern */
-}
+  }
 
-/* --- LISTS --- */
-ul { list-style-type: square; }
-/* Task Lists (Checkboxes) */
-input[type="checkbox"] {
+  th {
+    text-transform: uppercase;
+  }
+
+  /* E-ink friendly striping using dots instead of gray color */
+  tr:nth-child(even) {
+    background-image: radial-gradient(var(--ink) 15%, transparent 16%);
+    background-size: 4px 4px;
+  }
+
+  /* --- LISTS --- */
+  ul {
+    list-style-type: square;
+  }
+
+  /* Task Lists (Checkboxes) */
+  input[type="checkbox"] {
     appearance: none;
     width: 20px;
     height: 20px;
     border: 2px solid var(--ink);
     margin-right: 10px;
-}
-input[type="checkbox"]:checked {
-    background: var(--ink); /* Filled square when checked */
-}
+  }
 
-/* --- EXTRAS --- */
-hr {
+  input[type="checkbox"]:checked {
+    background: var(--ink);
+  }
+
+  /* --- EXTRAS --- */
+  hr {
     border: 0;
-    border-bottom: 4px dashed var(--ink); /* Scissors line */
+    border-bottom: var(--border-medium) dashed var(--ink);
     margin: 50px 0;
-}
+  }
 
-/* The Punk Correction (Strikethrough) */
-del {
+  /* The Punk Correction (Strikethrough) */
+  del {
     text-decoration: none;
     position: relative;
     opacity: 0.6;
-}
-del::after {
+  }
+
+  del::after {
     content: "";
     position: absolute;
     left: -5%;
@@ -157,11 +156,12 @@ del::after {
     height: 3px;
     background: var(--ink);
     transform: rotate(-2deg);
-}
+  }
 
-img {
-    filter: grayscale(100%) contrast(150%); /* High contrast for e-ink */
+  img {
+    filter: grayscale(100%) contrast(150%);
     border: 3px solid var(--ink);
     padding: 5px;
     background: var(--paper);
+  }
 }

@@ -25,6 +25,7 @@
         ];
 
         const THEMES = [
+            { file: 'themes/brutalist-gazette.css', name: 'Brutalist Gazette' },
             { file: 'themes/broadsheet.css', name: 'Broadsheet' },
             { file: 'themes/beton-brut.css', name: 'Béton Brut' },
             { file: 'themes/mod.css', name: 'Mod' },
@@ -34,6 +35,8 @@
             { file: 'themes/serif.css', name: 'Serif' },
             { file: 'themes/compact.css', name: 'Compact' },
             { file: 'themes/large.css', name: 'Large Print' },
+            { file: 'themes/rebel.css', name: 'Rebel' },
+            //
         ];
     </script>
     <!-- ========== END CONFIGURATION ========== -->
@@ -41,8 +44,12 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         :root {
+            /* Picker UI colors */
             --bg: #ffffff;
             --fg: #000000;
+            /* Theme system fallbacks */
+            --ink: #000000;
+            --paper: #ffffff;
         }
         body {
             background: var(--bg);
@@ -105,16 +112,18 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: var(--bg);
+            background: var(--paper);
+            color: var(--ink);
             overflow: auto;
             z-index: 9999;
         }
         #reader.active {
             display: block;
         }
-        #reader-content {
+        /* Content container - themes use @scope (article) */
+        #reader article {
+            display: block;
             padding: 40px;
-            max-width: 800px;
             margin: 0 auto;
         }
         #close-btn {
@@ -262,9 +271,14 @@
         <button id="close-btn">&times;</button>
         <div id="doc-panel"></div>
         <div id="theme-panel"></div>
-        <link id="base-css" rel="stylesheet" href="">
+        <!-- Base theme system (loaded first) -->
+        <link id="base-vars-css" rel="stylesheet" href="">
+        <link id="base-styles-css" rel="stylesheet" href="">
+        <!-- E-ink optimizations (auto-applied via media query) -->
+        <link rel="stylesheet" href="themes/_eink.css">
+        <!-- Theme overrides (loaded dynamically) -->
         <link id="theme-css" rel="stylesheet" href="">
-        <div id="reader-content"></div>
+        <article></article>
     </div>
 
     <script>
@@ -277,8 +291,9 @@
         const themeBtn = document.getElementById('theme-btn');
         const themePanel = document.getElementById('theme-panel');
         const reader = document.getElementById('reader');
-        const readerContent = document.getElementById('reader-content');
-        const baseCss = document.getElementById('base-css');
+        const readerContent = reader.querySelector('article');
+        const baseVarsCss = document.getElementById('base-vars-css');
+        const baseStylesCss = document.getElementById('base-styles-css');
         const themeCss = document.getElementById('theme-css');
 
         // Helper to load a document
@@ -354,7 +369,8 @@
             try {
                 await loadDocument(docSelect.value);
 
-                baseCss.href = 'eink.css';
+                baseVarsCss.href = 'themes/_base.css';
+                baseStylesCss.href = 'themes/_styles.css';
                 themeCss.href = themeSelect.value;
 
                 // Mark current selections in panels

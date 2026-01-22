@@ -1,0 +1,173 @@
+/* THEME: THE BRUTALIST GAZETTE */
+
+@scope (article) {
+  /* 1. THEME CONTRACT (Variables) */
+  :scope {
+    --bg-color: #f4f3ee;       /* Off-white paper */
+    --text-color: #0d0d0d;     /* Near black */
+    --accent-color: #ff3333;   /* Radical Red */
+    --highlight: #e7ff00;      /* Highlighter Yellow */
+    --border-thick: 4px solid var(--text-color);
+    --border-thin: 1px solid var(--text-color);
+    
+    /* Typography Mixing */
+    --font-head: 'Impact', 'Haettenschweiler', 'Arial Narrow Bold', sans-serif;
+    --font-body: 'Georgia', 'Times New Roman', serif;
+    --font-mono: 'Courier New', Courier, monospace;
+    
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-body);
+    line-height: 1.5;
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    
+    /* Simulate a printed page border */
+    border-left: var(--border-thick);
+    box-shadow: 15px 15px 0px var(--text-color);
+  }
+
+  /* 2. HEADINGS: Massive & Tight */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-head);
+    text-transform: uppercase;
+    line-height: 0.9;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+    word-wrap: break-word;
+  }
+
+  h1 {
+    font-size: 5rem;
+    background: var(--text-color);
+    color: var(--bg-color);
+    padding: 0.5rem 1rem;
+    /* Breaking the grid visually */
+    margin-left: -3rem; 
+    box-shadow: 10px 10px 0px var(--accent-color);
+    transform: rotate(-1deg);
+  }
+
+  h2 {
+    font-size: 3rem;
+    border-bottom: var(--border-thick);
+    padding-bottom: 0.5rem;
+  }
+
+  /* 3. PARAGRAPHS: Editorial Drop Caps */
+  p {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    text-align: justify;
+  }
+
+  /* The "Magazine" first-letter drop cap */
+  h1 + p::first-letter {
+    float: left;
+    font-family: var(--font-head);
+    font-size: 5.5rem;
+    line-height: 4rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    color: var(--accent-color);
+  }
+
+  /* 4. BLOCKQUOTES: The "Pull Quote" */
+  blockquote {
+    margin: 2rem 0;
+    padding: 2rem;
+    background-color: var(--highlight);
+    border: var(--border-thick);
+    font-family: var(--font-head);
+    font-size: 1.8rem;
+    line-height: 1.1;
+    text-align: center;
+    transform: rotate(1deg); /* Slight organic tilt */
+    box-shadow: 8px 8px 0px var(--text-color);
+  }
+  
+  blockquote p {
+    margin: 0; /* Reset internal p margins */
+    text-align: center;
+  }
+
+  /* 5. LISTS: Data Tables */
+  ul, ol {
+    list-style: none;
+    padding: 0;
+    border: var(--border-thick);
+    margin: 2rem 0;
+  }
+
+  li {
+    padding: 1rem;
+    border-bottom: var(--border-thin);
+    font-family: var(--font-mono);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+  }
+
+  li:last-child {
+    border-bottom: none;
+  }
+
+  /* Custom bullet points */
+  li::before {
+    content: "→";
+    margin-right: 1rem;
+    color: var(--accent-color);
+    font-size: 1.5rem;
+    font-weight: 900;
+  }
+
+  /* 6. CODE: The "Terminal" Insert */
+  pre {
+    background: #1a1a1a;
+    color: #00ff00;
+    padding: 1.5rem;
+    border: var(--border-thick);
+    overflow-x: auto;
+    /* Retro CRT vibe */
+    text-shadow: 0 0 5px #00ff00; 
+  }
+  
+  code {
+    font-family: var(--font-mono);
+  }
+
+  /* Inline code is a highlight marker */
+  p code, li code {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    padding: 0.2rem 0.5rem;
+    font-size: 0.9em;
+  }
+
+  /* 7. LINKS: High Visibility */
+  a {
+    color: var(--text-color);
+    text-decoration: none;
+    border-bottom: 3px solid var(--accent-color);
+    font-weight: bold;
+    transition: all 0.2s;
+  }
+
+  a:hover {
+    background-color: var(--accent-color);
+    color: white;
+  }
+
+  /* 8. IMAGES: Polaroids */
+  img {
+    display: block;
+    max-width: 100%;
+    border: var(--border-thick);
+    padding: 1rem;
+    background: white;
+    margin: 2rem auto;
+    filter: grayscale(100%) contrast(120%); /* Artistic filter */
+  }
+}
