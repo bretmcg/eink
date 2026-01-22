@@ -2,6 +2,10 @@
   { "file": "documents/the-weight-of-light.md", "name": "The Weight of Light" },
   { "file": "documents/document.md", "name": "Sample Document" },
   { "file": "documents/notes.md", "name": "Notes" },
+  { "file": "documents/kyber.md", "name": "The Kyber Manifesto" },
+  { "file": "documents/slate-ecosystem.md", "name": "77 Ramblings: the Slate Manifesto" },
+  { "file": "documents/mcgowen_craftworks.md", "name": "mcgowen_craftworks" },
+  { "file": "documents/mcgowen-io.md", "name": "McGowen.io" },
   { "file": "documents/essay.md", "name": "Essay" },
   { "file": "documents/profile.md", "name": "Profile" },
   { "file": "documents/still-canvas.md", "name": "Still canvas" },
@@ -9,8 +13,5 @@
   { "file": "documents/zen-flat-spec.md", "name": "Zen .flat spec" },
   { "file": "documents/deal_with_boox-and-kickstarter-levels.md", "name": "Boox into Kickstarter" },
   { "file": "documents/marked2-readonly-vibes-on-boox.md", "name": "Marked 2 vibes on boox" },
-  { "file": "documents/magic-party.md", "name": "Magic party" },
-  { "file": "documents/kyber.md", "name": "The Kyber Manifesto" },
-  { "file": "documents/slate-ecosystem.md", "name": "77 Ramblings: the Slate Manifesto" },
-  { "file": "documents/mcgowen_craftworks.md", "name": "mcgowen_craftworks" }
+  { "file": "documents/magic-party.md", "name": "Magic party" }
 ]
