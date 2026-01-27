@@ -1,0 +1,20 @@
+# Story Log
+
+## 2026-01-22: Card Overlay Schema Refactor
+
+Moved card overlay definitions from inline `backgroundImage` property to external JSON files.
+
+**What changed:**
+- Created `paper/overlays/` directory for overlay definitions
+- Each overlay is now a standalone JSON file with `image`, `size`, and `elements` fields
+- `card-design.js` loads overlay files asynchronously
+- Backward compatible: designs using old `backgroundImage` property still work
+
+**Files:**
+- `paper/overlays/rascal-of-diamonds.json` (new)
+- `paper/card-designs.json` (modified)
+- `paper/card-design.js` (modified)
+- `paper/new-design.md` (new) - documents how to add new designs
+
+**Why:**
+Prepares for Phase 2 (UI elements) and Phase 3 (custom JS overlays) by separating overlay concerns into dedicated files.

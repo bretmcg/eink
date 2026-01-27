@@ -1,0 +1,192 @@
+[
+    {
+        "publication": "Bret McGowen",
+        "url": "https://bretmcg.substack.com",
+        "posts": []
+    },
+    {
+        "publication": "The Pragmatic Engineer",
+        "url": "https://pragmaticengineer.substack.com",
+        "posts": [
+            {
+                "title": "How AWS S3 is built",
+                "date": "Wed, 21 Jan 2026 18:00:17 GMT",
+                "output.md": "The_Pragmatic_Engineer-How_AWS_S3_is_built.md",
+                "input.http": "https://newsletter.pragmaticengineer.com/p/how-aws-s3-is-built"
+            },
+            {
+                "title": "The Product-Minded Engineer: The importance of good errors and warnings",
+                "date": "Tue, 20 Jan 2026 17:31:16 GMT",
+                "output.md": "The_Pragmatic_Engineer-The_Product-Minded_Engineer_The_importance_of_good_errors_and_warnings.md",
+                "input.http": "https://newsletter.pragmaticengineer.com/p/the-product-minded-engineer"
+            },
+            {
+                "title": "The Pulse #159: Long-running agents and orchestrating lots of them",
+                "date": "Thu, 15 Jan 2026 17:09:41 GMT",
+                "output.md": "The_Pragmatic_Engineer-The_Pulse_#159_Long-running_agents_and_orchestrating_lots_of_them.md",
+                "input.http": "https://newsletter.pragmaticengineer.com/p/the-pulse-159-long-running-agents"
+            },
+            {
+                "title": "Design Systems for Software Engineers",
+                "date": "Tue, 13 Jan 2026 17:46:25 GMT",
+                "output.md": "The_Pragmatic_Engineer-Design_Systems_for_Software_Engineers.md",
+                "input.http": "https://newsletter.pragmaticengineer.com/p/design-systems-for-software-engineers"
+            },
+            {
+                "title": "The Pulse #158: new ways of coding with AI tools",
+                "date": "Thu, 08 Jan 2026 20:17:41 GMT",
+                "output.md": "The_Pragmatic_Engineer-The_Pulse_#158_new_ways_of_coding_with_AI_tools.md",
+                "input.http": "https://newsletter.pragmaticengineer.com/p/the-pulse-158-new-ways-of-coding"
+            }
+        ]
+    },
+    {
+        "publication": "Dr. Dominic Ng",
+        "url": "https://drdominicng.substack.com",
+        "posts": []
+    },
+    {
+        "publication": "Robert Reich",
+        "url": "https://robertreich.substack.com",
+        "posts": [
+            {
+                "title": "Seriously, what can we do about the fascist now loose upon America?",
+                "date": "Thu, 22 Jan 2026 09:02:50 GMT",
+                "output.md": "Robert_Reich-Seriously,_what_can_we_do_about_the_fascist_now_loose_upon_America.md",
+                "input.http": "https://robertreich.substack.com/p/again-what-should-we-do-about-the"
+            },
+            {
+                "title": "O Canada",
+                "date": "Wed, 21 Jan 2026 18:04:57 GMT",
+                "output.md": "Robert_Reich-O_Canada.md",
+                "input.http": "https://robertreich.substack.com/p/o-canada"
+            },
+            {
+                "title": "Office Hours: What are you prepared to risk to counter ICE\u2019s bullying and brutality?",
+                "date": "Wed, 21 Jan 2026 09:02:24 GMT",
+                "output.md": "Robert_Reich-Office_Hours_What_are_you_prepared_to_risk_to_counter_ICE\u2019s_bullying_and_brutality.md",
+                "input.http": "https://robertreich.substack.com/p/office-hours-what-are-you-prepared"
+            },
+            {
+                "title": "Memo to Europe: Remember Neville Chamberlain",
+                "date": "Tue, 20 Jan 2026 20:14:51 GMT",
+                "output.md": "Robert_Reich-Memo_to_Europe_Remember_Neville_Chamberlain.md",
+                "input.http": "https://robertreich.substack.com/p/memo-to-europe-remember-neville-chamberlain"
+            },
+            {
+                "title": "Trump\u2019s ICE and Hitler\u2019s Brown Shirts",
+                "date": "Tue, 20 Jan 2026 09:02:35 GMT",
+                "output.md": "Robert_Reich-Trump\u2019s_ICE_and_Hitler\u2019s_Brown_Shirts.md",
+                "input.http": "https://robertreich.substack.com/p/trumps-ice-and-hitlers-brown-shirts"
+            }
+        ]
+    },
+    {
+        "publication": "The Drey Dossier",
+        "url": "https://thedreydossier.substack.com",
+        "posts": [
+            {
+                "title": "Tony Blair and The Uncle Larry Doctrine",
+                "date": "Tue, 13 Jan 2026 20:45:03 GMT",
+                "output.md": "The_Drey_Dossier-Tony_Blair_and_The_Uncle_Larry_Doctrine.md",
+                "input.http": "https://thedreydossier.substack.com/p/the-uncle-larry-doctrine-palantirs"
+            },
+            {
+                "title": "The Fatherboard: Venezuela & AI Warfare",
+                "date": "Fri, 09 Jan 2026 18:08:53 GMT",
+                "output.md": "The_Drey_Dossier-The_Fatherboard_Venezuela_&_AI_Warfare.md",
+                "input.http": "https://thedreydossier.substack.com/p/the-fatherboard-venezuela-and-ai"
+            },
+            {
+                "title": "Stargate LLC: An American AI Project. Kind Of.",
+                "date": "Wed, 31 Dec 2025 00:51:13 GMT",
+                "output.md": "The_Drey_Dossier-Stargate_LLC_An_American_AI_Project._Kind_Of..md",
+                "input.http": "https://thedreydossier.substack.com/p/stargate-llc-an-american-ai-project"
+            },
+            {
+                "title": "Underground Data Centers in Israel, TikTok, and the Surveillance Pipeline",
+                "date": "Sat, 20 Dec 2025 18:38:22 GMT",
+                "output.md": "The_Drey_Dossier-Underground_Data_Centers_in_Israel,_TikTok,_and_the_Surveillance_Pipeline.md",
+                "input.http": "https://thedreydossier.substack.com/p/underground-data-center-in-israel"
+            },
+            {
+                "title": "Trump Isn\u2019t Building a Ballroom",
+                "date": "Mon, 15 Dec 2025 16:45:34 GMT",
+                "output.md": "The_Drey_Dossier-Trump_Isn\u2019t_Building_a_Ballroom.md",
+                "input.http": "https://thedreydossier.substack.com/p/trump-isnt-building-a-ballroom"
+            }
+        ]
+    },
+    {
+        "publication": "Grow Your Health Newsletter",
+        "url": "https://growyourhealthnewsletter.substack.com",
+        "posts": [
+            {
+                "title": "Stop Counting Subscribers. Track This Instead.",
+                "date": "Thu, 15 Jan 2026 14:32:43 GMT",
+                "output.md": "Grow_Your_Health_Newsletter-Stop_Counting_Subscribers._Track_This_Instead..md",
+                "input.http": "https://growyourhealthnewsletter.substack.com/p/stop-counting-subscribers-track-this"
+            },
+            {
+                "title": "How To Grow From 0 to 20,000 Followers on Twitter/X in 2026",
+                "date": "Tue, 06 Jan 2026 16:03:27 GMT",
+                "output.md": "Grow_Your_Health_Newsletter-How_To_Grow_From_0_to_20,000_Followers_on_TwitterX_in_2026.md",
+                "input.http": "https://growyourhealthnewsletter.substack.com/p/how-to-grow-from-0-to-20000-followers"
+            },
+            {
+                "title": "Why Your Paid Newsletter Isn't Converting",
+                "date": "Tue, 30 Dec 2025 17:47:37 GMT",
+                "output.md": "Grow_Your_Health_Newsletter-Why_Your_Paid_Newsletter_Isn't_Converting.md",
+                "input.http": "https://growyourhealthnewsletter.substack.com/p/why-your-paid-newsletter-isnt-converting"
+            },
+            {
+                "title": "3 Tips to Writing Viral Substack Notes",
+                "date": "Tue, 23 Dec 2025 17:31:45 GMT",
+                "output.md": "Grow_Your_Health_Newsletter-3_Tips_to_Writing_Viral_Substack_Notes.md",
+                "input.http": "https://growyourhealthnewsletter.substack.com/p/3-tips-to-writing-viral-substack-fa1"
+            },
+            {
+                "title": "Stop Posting Everywhere: How to Find the 1-2 Platforms That Actually Matter",
+                "date": "Tue, 23 Dec 2025 17:29:06 GMT",
+                "output.md": "Grow_Your_Health_Newsletter-Stop_Posting_Everywhere_How_to_Find_the_1-2_Platforms_That_Actually_Matter.md",
+                "input.http": "https://growyourhealthnewsletter.substack.com/p/stop-posting-everywhere-how-to-find"
+            }
+        ]
+    },
+    {
+        "publication": "Proof",
+        "url": "https://sethabramson.substack.com",
+        "posts": [
+            {
+                "title": "As Trump Regime Readies a Military Invasion of Minnesota, New Evidence Confirms Renee Good Was Executed",
+                "date": "Tue, 20 Jan 2026 01:59:35 GMT",
+                "output.md": "Proof-As_Trump_Regime_Readies_a_Military_Invasion_of_Minnesota,_New_Evidence_Confirms_Renee_Good_Was_Executed.md",
+                "input.http": "https://sethabramson.substack.com/p/as-trump-regime-readies-a-military"
+            },
+            {
+                "title": "Trump Administration to Criminally Investigate Beloved Mother of Three It Already Murdered\u2014and Her Grieving Widow, Too",
+                "date": "Wed, 14 Jan 2026 02:01:25 GMT",
+                "output.md": "Proof-Trump_Administration_to_Criminally_Investigate_Beloved_Mother_of_Three_It_Already_Murdered\u2014and_Her_Grieving_Widow,_Too.md",
+                "input.http": "https://sethabramson.substack.com/p/trump-administration-to-criminally"
+            },
+            {
+                "title": "New Revelations in the Renee Good Shooting Narrative Have Sent Everything Off the Rails",
+                "date": "Mon, 12 Jan 2026 02:03:15 GMT",
+                "output.md": "Proof-New_Revelations_in_the_Renee_Good_Shooting_Narrative_Have_Sent_Everything_Off_the_Rails.md",
+                "input.http": "https://sethabramson.substack.com/p/new-revelations-in-the-renee-good"
+            },
+            {
+                "title": "As Tensions Flare in Minneapolis, We Learn That the Shooting of Renee Good Is Even Worse Than Originally Believed",
+                "date": "Sat, 10 Jan 2026 00:36:07 GMT",
+                "output.md": "Proof-As_Tensions_Flare_in_Minneapolis,_We_Learn_That_the_Shooting_of_Renee_Good_Is_Even_Worse_Than_Originally_Believed.md",
+                "input.http": "https://sethabramson.substack.com/p/as-tensions-flare-in-minneapolis"
+            },
+            {
+                "title": "A Longtime Criminal Defense Attorney Breaks Down the Viral Video of the Renee Good Killing",
+                "date": "Thu, 08 Jan 2026 19:54:50 GMT",
+                "output.md": "Proof-A_Longtime_Criminal_Defense_Attorney_Breaks_Down_the_Viral_Video_of_the_Renee_Good_Killing.md",
+                "input.http": "https://sethabramson.substack.com/p/a-longtime-criminal-defense-attorney"
+            }
+        ]
+    }
+]

@@ -1,0 +1,28 @@
+2026-01-22 — Card design docs + simplifying document/article file structure
+
+Started by documenting the card design system dimensions:
+- Cards use 2.5:4 aspect ratio (312×500px reference)
+- Inner border sits 12px inset from edges
+- Content area is roughly 286×474px
+- Created card-design.md with full property reference and examples
+
+Then refactored how documents and articles are loaded:
+
+documents.txt
+  - Moved from paper/documents/00-documents.txt → paper/documents.txt
+  - Entries are just filenames (e.g., "essay.md")
+  - The "documents/" prefix is now assumed by the code
+
+documents.json
+  - Entries no longer need "documents/" prefix
+  - e.g., "the-weight-of-light.md" instead of "documents/the-weight-of-light.md"
+
+articles.json (formerly feed/feed-markdown-rss.json)
+  - Renamed folder: feed/ → .articles/
+  - articles.json moved up to paper/ and now just lists index file paths:
+    [".articles/2026-01-22__09-10/00-articles.json"]
+  - Each index file sits alongside its markdown files
+  - Markdown paths in index files resolve relative to the index file's directory
+
+The idea: keep the JSON files simple (just filenames), and let the code
+handle path prefixes. Index files live next to their content.
